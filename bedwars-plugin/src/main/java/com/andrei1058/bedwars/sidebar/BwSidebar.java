@@ -17,6 +17,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
+import org.bukkit.scheduler.BukkitScheduler;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -27,6 +28,7 @@ import java.util.*;
 
 import static com.andrei1058.bedwars.BedWars.*;
 import static com.andrei1058.bedwars.api.language.Language.getMsg;
+import static org.bukkit.Bukkit.getServer;
 
 public class BwSidebar implements ISidebar {
 
@@ -346,7 +348,7 @@ public class BwSidebar implements ISidebar {
 
         handleHealthIcon();
 
-        if (arena == null) {
+        if (noArena()) {
             // if tab formatting is enabled in lobby world
             if (config.getBoolean(ConfigPath.SB_CONFIG_SIDEBAR_LIST_FORMAT_LOBBY) &&
                     !config.getLobbyWorldName().trim().isEmpty()) {
@@ -355,7 +357,13 @@ public class BwSidebar implements ISidebar {
                 if (null == lobby) {
                     return;
                 }
-                lobby.getPlayers().forEach(inLobby -> giveUpdateTabFormat(inLobby, true));
+                BukkitScheduler scheduler = getServer().getScheduler();
+                scheduler.scheduleSyncDelayedTask(plugin, new Runnable() {
+                    @Override
+                    public void run() {
+                        lobby.getPlayers().forEach(inLobby -> giveUpdateTabFormat(inLobby, true));
+                    }
+                }, 20L);
             }
             return;
         }
@@ -559,7 +567,7 @@ public class BwSidebar implements ISidebar {
      * @return true if tab formatting is disabled for current sidebar/ arena stage
      */
     public boolean isTabFormattingDisabled() {
-        if (noArena()) {
+        if (noArena() && config.getBoolean(ConfigPath.SB_CONFIG_SIDEBAR_LIST_FORMAT_LOBBY)) {
 
             if (getServerType() == ServerType.SHARED) {
                 if (config.getBoolean(ConfigPath.SB_CONFIG_SIDEBAR_LIST_FORMAT_LOBBY) &&
@@ -570,7 +578,7 @@ public class BwSidebar implements ISidebar {
                 }
             }
 
-            return config.getBoolean(ConfigPath.SB_CONFIG_SIDEBAR_LIST_FORMAT_LOBBY);
+            return false;
         }
         // if tab formatting is disabled in game
         if (arena.getStatus() == GameState.playing && config.getBoolean(ConfigPath.SB_CONFIG_SIDEBAR_LIST_FORMAT_PLAYING)) {
