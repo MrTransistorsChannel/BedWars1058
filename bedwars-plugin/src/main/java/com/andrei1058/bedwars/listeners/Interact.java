@@ -95,17 +95,27 @@ public class Interact implements Listener {
         if (e.getAction() != Action.RIGHT_CLICK_BLOCK) return;
         Block b = e.getClickedBlock();
         if (b == null) return;
-        if ((BedWars.getServerType() == ServerType.MULTIARENA && b.getWorld().getName().equals(BedWars.getLobbyWorld()) && !BreakPlace.isBuildSession(e.getPlayer())) || Arena.getArenaByPlayer(e.getPlayer()) != null) {
-            if (b.getType() == nms.materialCraftingTable() && config.getBoolean(ConfigPath.GENERAL_CONFIGURATION_DISABLE_CRAFTING)) {
+        if ((BedWars.getServerType() == ServerType.MULTIARENA
+                && b.getWorld().getName().equals(BedWars.getLobbyWorld())
+                && !BreakPlace.isBuildSession(e.getPlayer()))
+                || Arena.getArenaByPlayer(e.getPlayer()) != null) {
+            if (b.getType() == nms.materialCraftingTable()
+                    && config.getBoolean(ConfigPath.GENERAL_CONFIGURATION_DISABLE_CRAFTING)) {
                 e.setCancelled(true);
-            } else if (b.getType() == nms.materialEnchantingTable() && config.getBoolean(ConfigPath.GENERAL_CONFIGURATION_DISABLE_ENCHANTING)) {
+            } else if (b.getType() == nms.materialEnchantingTable()
+                    && config.getBoolean(ConfigPath.GENERAL_CONFIGURATION_DISABLE_ENCHANTING)) {
                 e.setCancelled(true);
-            } else if (b.getType() == Material.FURNACE && config.getBoolean(ConfigPath.GENERAL_CONFIGURATION_DISABLE_FURNACE)) {
+            } else if (b.getType() == Material.ANVIL
+                    && config.getBoolean(ConfigPath.GENERAL_CONFIGURATION_DISABLE_ANVIL)) {
                 e.setCancelled(true);
-            } else if (b.getType() == Material.BREWING_STAND && config.getBoolean(ConfigPath.GENERAL_CONFIGURATION_DISABLE_BREWING_STAND)) {
-                e.setCancelled(true);
-            } else if (b.getType() == Material.ANVIL && config.getBoolean(ConfigPath.GENERAL_CONFIGURATION_DISABLE_ANVIL)) {
-                e.setCancelled(true);
+            } else {
+                List<String> disableInteracts = config.getList(ConfigPath.GENERAL_CONFIGURATION_DISABLE_INTERACTS);
+                for (String item: disableInteracts) {
+                    item = item.toUpperCase();
+                    if(b.getType() == Material.getMaterial(item)) {
+                        e.setCancelled(true);
+                    }
+                }
             }
         }
     }
