@@ -32,6 +32,7 @@ import com.andrei1058.bedwars.api.language.Messages;
 import com.andrei1058.bedwars.api.tasks.PlayingTask;
 import com.andrei1058.bedwars.arena.Arena;
 import org.bukkit.Bukkit;
+import org.bukkit.Effect;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -88,7 +89,6 @@ public class GamePlayingTask implements Runnable, PlayingTask {
 
     @Override
     public void run() {
-        System.out.println("sdfsdgtrfdhkug");
         switch (getArena().getNextEvent()) {
             case EMERALD_GENERATOR_TIER_II:
             case EMERALD_GENERATOR_TIER_III:
@@ -250,6 +250,7 @@ public class GamePlayingTask implements Runnable, PlayingTask {
                         //nms.showPlayer(e.getKey(), p);
                     }
                 } else {
+                    e.getKey().getWorld().playEffect(e.getKey().getLocation(), Effect.FOOTSTEP, null);
                     getArena().getShowTime().replace(e.getKey(), e.getValue() - 1);
                 }
             }
