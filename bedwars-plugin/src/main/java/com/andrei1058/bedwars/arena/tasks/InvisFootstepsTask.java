@@ -27,7 +27,6 @@ public class InvisFootstepsTask implements Runnable {
 
     @Override
     public void run() {
-        System.out.println(player.getName() + " is invis");
         if(player == null || !player.isOnline()){
             task.cancel();
             return;

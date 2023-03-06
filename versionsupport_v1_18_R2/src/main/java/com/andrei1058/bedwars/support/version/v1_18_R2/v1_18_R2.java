@@ -298,11 +298,11 @@ public class v1_18_R2 extends VersionSupport {
         items.add(new Pair<>(EnumItemSlot.d, new ItemStack(Item.b(0))));
         items.add(new Pair<>(EnumItemSlot.c, new ItemStack(Item.b(0))));
         PacketPlayOutEntityEquipment packet1 = new PacketPlayOutEntityEquipment(victim.getEntityId(), items);
-        PacketPlayOutEntityEquipment packet2 = new PacketPlayOutEntityEquipment(victim.getEntityId(), hands);
+        //PacketPlayOutEntityEquipment packet2 = new PacketPlayOutEntityEquipment(victim.getEntityId(), hands);
         EntityPlayer pc = ((CraftPlayer) receiver).getHandle();
-        if (victim != receiver) {
+        /*if (victim != receiver) {
             pc.b.a(packet2);
-        }
+        }*/
         pc.b.a(packet1);
     }
 
@@ -319,11 +319,11 @@ public class v1_18_R2 extends VersionSupport {
         items.add(new Pair<>(EnumItemSlot.d, CraftItemStack.asNMSCopy(victim.getInventory().getLeggings())));
         items.add(new Pair<>(EnumItemSlot.c, CraftItemStack.asNMSCopy(victim.getInventory().getBoots())));
         PacketPlayOutEntityEquipment packet1 = new PacketPlayOutEntityEquipment(victim.getEntityId(), items);
-        PacketPlayOutEntityEquipment packet2 = new PacketPlayOutEntityEquipment(victim.getEntityId(), hands);
+        //PacketPlayOutEntityEquipment packet2 = new PacketPlayOutEntityEquipment(victim.getEntityId(), hands);
         EntityPlayer pc = ((CraftPlayer) receiver).getHandle();
-        if (victim != receiver) {
+        /*if (victim != receiver) {
             pc.b.a(packet2);
-        }
+        }*/
         pc.b.a(packet1);
     }
 
