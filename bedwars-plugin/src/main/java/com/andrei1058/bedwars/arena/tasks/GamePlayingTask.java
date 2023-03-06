@@ -88,6 +88,7 @@ public class GamePlayingTask implements Runnable, PlayingTask {
 
     @Override
     public void run() {
+        System.out.println("sdfsdgtrfdhkug");
         switch (getArena().getNextEvent()) {
             case EMERALD_GENERATOR_TIER_II:
             case EMERALD_GENERATOR_TIER_III:
@@ -246,7 +247,6 @@ public class GamePlayingTask implements Runnable, PlayingTask {
                     Bukkit.getPluginManager().callEvent(new PlayerInvisibilityPotionEvent(PlayerInvisibilityPotionEvent.Type.REMOVED, getArena().getTeam(e.getKey()), e.getKey(), getArena()));
                     for (Player p : e.getKey().getWorld().getPlayers()) {
                         nms.showArmor(e.getKey(), p);
-                        Bukkit.getLogger().warning("fsdfsdfs");
                         //nms.showPlayer(e.getKey(), p);
                     }
                 } else {
