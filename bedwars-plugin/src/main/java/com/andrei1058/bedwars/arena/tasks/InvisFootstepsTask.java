@@ -41,6 +41,7 @@ public class InvisFootstepsTask implements Runnable {
         if(!isInvis) task.cancel();
 
         if(lastStep != null && lastStep.distance(player.getLocation()) < 0.25) return;
+        lastStep = player.getLocation();
 
         player.getWorld().playEffect(player.getLocation().add(new Vector(0, 0.01, 0)), Effect.FOOTSTEP, 200);
     }
