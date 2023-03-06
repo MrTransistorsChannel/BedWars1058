@@ -71,6 +71,8 @@ public class CmdStart extends SubCommand {
             if (args.length == 1 && args[0].equalsIgnoreCase("debug") && s.isOp()){
                 a.changeStatus(GameState.starting);
                 BedWars.debug = true;
+            } else if (args.length == 1 && args[0].equalsIgnoreCase("force") && p.hasPermission(Permissions.PERMISSION_FORCESTARTADMIN)) {
+                a.changeStatus(GameState.starting);
             } else {
                 return true;
             }

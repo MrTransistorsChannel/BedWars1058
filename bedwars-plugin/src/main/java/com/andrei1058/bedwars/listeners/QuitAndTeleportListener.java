@@ -131,6 +131,12 @@ public class QuitAndTeleportListener implements Listener {
                     SidebarService.getInstance().remove(e.getPlayer());
                 }
                 //}, 2L);
+            } else if (BedWars.getServerType() == ServerType.MULTIARENA) {
+                if (BedWars.config.getBoolean(ConfigPath.SB_CONFIG_SIDEBAR_USE_LOBBY_SIDEBAR)) {
+                    if (e.getPlayer().getWorld().getName().equalsIgnoreCase(BedWars.getLobbyWorld())) {
+                        SidebarService.getInstance().giveSidebar(e.getPlayer(), null, true);
+                    }
+                }
             }
         }
         IArena a = Arena.getArenaByPlayer(e.getPlayer());

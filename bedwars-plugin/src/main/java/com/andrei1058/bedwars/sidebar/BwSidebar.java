@@ -17,6 +17,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
+import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitScheduler;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
@@ -346,8 +347,6 @@ public class BwSidebar implements ISidebar {
             return;
         }
 
-        handleHealthIcon();
-
         if (noArena()) {
             // if tab formatting is enabled in lobby world
             if (config.getBoolean(ConfigPath.SB_CONFIG_SIDEBAR_LIST_FORMAT_LOBBY) &&
@@ -367,6 +366,8 @@ public class BwSidebar implements ISidebar {
             }
             return;
         }
+
+        handleHealthIcon();
 
         arena.getPlayers().forEach(playing -> giveUpdateTabFormat(playing, true));
         arena.getSpectators().forEach(spectating -> giveUpdateTabFormat(spectating, true));
@@ -489,9 +490,28 @@ public class BwSidebar implements ISidebar {
             throw new RuntimeException("Wtf dude");
         }
 
-        String tabName = TEAM_PREFIX+Base64.getEncoder().encodeToString((team.getName()).getBytes(StandardCharsets.UTF_8));
-        if (tabName.length() > 16) {
-            tabName = tabName.substring(0, 16);
+        String tabName = this.getTabName(team);
+        String tabNameInvisible = tabName = tabName.substring(0, tabName.length() >= 16 ? 15 : tabName.length());
+        tabNameInvisible += "^!";
+
+        if (player.hasPotionEffect(PotionEffectType.INVISIBILITY)) {
+            if (!team.isMember(getPlayer())) {
+                // remove player from its tab group (if team tab group)
+                PlayerTab teamTab = tabList.getOrDefault(tabName, null);
+                if (null != teamTab) {
+                    teamTab.remove(player);
+
+                    // create or get tab group for the invisible players in that team
+                    // set tab group name visibility to false
+                    // identifier for invisibility
+                    tabName = tabNameInvisible;
+                }
+            }
+        } else {
+            PlayerTab invTab = tabList.getOrDefault(tabNameInvisible, null);
+            if (null != invTab) {
+                invTab.remove(player);
+            }
         }
 
         PlayerTab teamTab = tabList.get(tabName);
@@ -508,14 +528,26 @@ public class BwSidebar implements ISidebar {
 
             teamTab = handle.playerTabCreate(tabName, null, prefix, suffix, PlayerTab.PushingRule.PUSH_OTHER_TEAMS);
             tabList.put(tabName, teamTab);
+            if (player.hasPotionEffect(PotionEffectType.INVISIBILITY)) {
+                teamTab.setNameTagVisibility(PlayerTab.NameTagVisibility.NEVER);
+            }
         }
 
         teamTab.add(player);
 
+        // todo this should be outside. we are basically sending the player header and footer in sidebar holder's language
         SidebarManager.getInstance().sendHeaderFooter(
                 player, lang.m(Messages.FORMATTING_SIDEBAR_TAB_HEADER_PLAYING),
                 lang.m(Messages.FORMATTING_SIDEBAR_TAB_FOOTER_PLAYING)
         );
+    }
+
+    private @NotNull String getTabName(@NotNull ITeam team) {
+        String tabName = TEAM_PREFIX + Base64.getEncoder().encodeToString((team.getName()).getBytes(StandardCharsets.UTF_8));
+        if (tabName.length() > 16) {
+            tabName = tabName.substring(0, 16);
+        }
+        return tabName;
     }
 
     @NotNull
@@ -657,14 +689,10 @@ public class BwSidebar implements ISidebar {
      * @param toggle true when applied, false when expired.
      */
     public void handleInvisibilityPotion(@NotNull Player player, boolean toggle) {
-        if (toggle) {
-//            handle.remove(player);
-//            handle.playerListHideNameTag(player);
-            //todo the new sidebar does not provide a solution for invisibility potion?!!
-        } else {
-//            this.giveUpdateTabFormat(player, false);
-//            handle.playerListRestoreNameTag(player);
+        if (null == arena) {
+            throw new RuntimeException("This can only be used when the player is in arena");
         }
+        this.giveUpdateTabFormat(player, false);
     }
 
     public Sidebar getHandle() {
