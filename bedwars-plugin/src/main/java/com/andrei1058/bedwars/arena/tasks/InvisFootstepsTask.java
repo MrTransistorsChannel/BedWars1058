@@ -15,7 +15,7 @@ public class InvisFootstepsTask implements Runnable {
 
     public InvisFootstepsTask(Player player) {
         this.player = player;
-        task = Bukkit.getScheduler().runTaskTimer(BedWars.plugin, this, 0, 10);
+        task = Bukkit.getScheduler().runTaskTimer(BedWars.plugin, this, 0, 4);
     }
 
     public Player getPlayer() {
@@ -24,6 +24,11 @@ public class InvisFootstepsTask implements Runnable {
 
     @Override
     public void run() {
+        System.out.println(player.getName() + " is invis");
+        if(player == null || !player.isOnline()){
+            task.cancel();
+            return;
+        }
         if (!((Entity) player).isOnGround()) return;
 
         boolean isInvis = false;
@@ -32,7 +37,7 @@ public class InvisFootstepsTask implements Runnable {
         }
         if(!isInvis) task.cancel();
 
-        player.getWorld().playEffect(player.getLocation().add(new Vector(0, 0.001, 0)), Effect.FOOTSTEP, 200);
+        player.getWorld().playEffect(player.getLocation().add(new Vector(0, 0.01, 0)), Effect.FOOTSTEP, 200);
     }
 
     public void cancel() {
