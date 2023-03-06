@@ -250,7 +250,7 @@ public class GamePlayingTask implements Runnable, PlayingTask {
                         //nms.showPlayer(e.getKey(), p);
                     }
                 } else {
-                    e.getKey().getWorld().playEffect(e.getKey().getLocation(), Effect.FOOTSTEP, null);
+                    e.getKey().getWorld().playEffect(e.getKey().getLocation(), Effect.FOOTSTEP, 200);
                     getArena().getShowTime().replace(e.getKey(), e.getValue() - 1);
                 }
             }
