@@ -37,8 +37,10 @@ import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitTask;
 
+import java.io.Console;
 import java.util.Map;
 
+import static com.andrei1058.bedwars.BedWars.getServerType;
 import static com.andrei1058.bedwars.BedWars.nms;
 import static com.andrei1058.bedwars.api.language.Language.getMsg;
 
@@ -244,6 +246,7 @@ public class GamePlayingTask implements Runnable, PlayingTask {
                     Bukkit.getPluginManager().callEvent(new PlayerInvisibilityPotionEvent(PlayerInvisibilityPotionEvent.Type.REMOVED, getArena().getTeam(e.getKey()), e.getKey(), getArena()));
                     for (Player p : e.getKey().getWorld().getPlayers()) {
                         nms.showArmor(e.getKey(), p);
+                        Bukkit.getLogger().warning("fsdfsdfs");
                         //nms.showPlayer(e.getKey(), p);
                     }
                 } else {
