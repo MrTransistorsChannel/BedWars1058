@@ -24,6 +24,7 @@ import com.andrei1058.bedwars.api.arena.IArena;
 import com.andrei1058.bedwars.api.arena.team.ITeam;
 import com.andrei1058.bedwars.api.events.player.PlayerInvisibilityPotionEvent;
 import com.andrei1058.bedwars.arena.Arena;
+import com.andrei1058.bedwars.arena.tasks.InvisFootstepsTask;
 import com.andrei1058.bedwars.sidebar.SidebarService;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -81,6 +82,8 @@ public class InvisibilityPotionListener implements Listener {
                             ITeam t = a.getTeam(e.getPlayer());
                             // keep trace of invisible players to send hide armor packet when required
                             // because potions do not hide armors
+                            //TODO: add Runnable start
+                            new InvisFootstepsTask(e.getPlayer());
                             a.getShowTime().put(e.getPlayer(), pe.getDuration() / 20);
                             //
                             for (Player p1 : e.getPlayer().getWorld().getPlayers()) {

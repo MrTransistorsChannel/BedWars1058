@@ -32,16 +32,13 @@ import com.andrei1058.bedwars.api.language.Messages;
 import com.andrei1058.bedwars.api.tasks.PlayingTask;
 import com.andrei1058.bedwars.arena.Arena;
 import org.bukkit.Bukkit;
-import org.bukkit.Effect;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitTask;
 
-import java.io.Console;
 import java.util.Map;
 
-import static com.andrei1058.bedwars.BedWars.getServerType;
 import static com.andrei1058.bedwars.BedWars.nms;
 import static com.andrei1058.bedwars.api.language.Language.getMsg;
 
@@ -150,7 +147,7 @@ public class GamePlayingTask implements Runnable, PlayingTask {
                             l.clone().subtract(0, y, 0).getBlock().setType(Material.AIR);
                         }
                     }
-                    for (ITeam team : arena.getTeams()){
+                    for (ITeam team : arena.getTeams()) {
                         for (IGenerator o : team.getGenerators()) {
                             Location l = o.getLocation();
                             for (int y = 0; y < 20; y++) {
@@ -222,7 +219,7 @@ public class GamePlayingTask implements Runnable, PlayingTask {
                         continue;
                     }
                     ITeam t = a.getTeam(e.getKey());
-                    if (t == null){
+                    if (t == null) {
                         a.addSpectator(e.getKey(), true, null);
                     } else {
                         t.respawnMember(e.getKey());
@@ -250,7 +247,6 @@ public class GamePlayingTask implements Runnable, PlayingTask {
                         //nms.showPlayer(e.getKey(), p);
                     }
                 } else {
-                    e.getKey().getWorld().playEffect(e.getKey().getLocation(), Effect.FOOTSTEP, 200);
                     getArena().getShowTime().replace(e.getKey(), e.getValue() - 1);
                 }
             }
