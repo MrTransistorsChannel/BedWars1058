@@ -24,6 +24,7 @@ public class NewPlaceBlock {
                     return;
                 }
             }*/
+            // Using existing method to check regions and build limits
             if(Misc.isBuildProtected(b.getRelative(x, y, z).getLocation(), Arena.getArenaByPlayer(p))) return;
             if (!ladder) {
                 BedWars.nms.placeTowerBlocks(b, Arena.getArenaByPlayer(p), color, x, y, z);
