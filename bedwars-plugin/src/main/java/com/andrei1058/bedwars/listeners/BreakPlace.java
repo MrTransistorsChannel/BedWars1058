@@ -168,22 +168,12 @@ public class BreakPlace implements Listener {
                 e.setCancelled(true);
                 return;
             }
-            if (e.getBlockPlaced().getLocation().getBlockX() > a.getConfig().getInt("worldBorder")) {
+            if (Math.abs(e.getBlockPlaced().getLocation().getBlockX()) > a.getConfig().getInt("worldBorder")/2) {
                 p.sendMessage(getMsg(p, Messages.INTERACT_CANNOT_PLACE_BLOCK));
                 e.setCancelled(true);
                 return;
             }
-            if (e.getBlockPlaced().getLocation().getBlockX() < -a.getConfig().getInt("worldBorder")) {
-                p.sendMessage(getMsg(p, Messages.INTERACT_CANNOT_PLACE_BLOCK));
-                e.setCancelled(true);
-                return;
-            }
-            if (e.getBlockPlaced().getLocation().getBlockZ() > a.getConfig().getInt("worldBorder")) {
-                p.sendMessage(getMsg(p, Messages.INTERACT_CANNOT_PLACE_BLOCK));
-                e.setCancelled(true);
-                return;
-            }
-            if (e.getBlockPlaced().getLocation().getBlockZ() < -a.getConfig().getInt("worldBorder")) {
+            if (Math.abs(e.getBlockPlaced().getLocation().getBlockZ()) > a.getConfig().getInt("worldBorder")/2) {
                 p.sendMessage(getMsg(p, Messages.INTERACT_CANNOT_PLACE_BLOCK));
                 e.setCancelled(true);
                 return;

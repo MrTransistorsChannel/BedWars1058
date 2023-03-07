@@ -369,11 +369,16 @@ public class Misc {
      * @since API 8
      */
     @SuppressWarnings("WeakerAccess")
-    public static boolean isOutsideOfBorder(Location l) {
-        WorldBorder border = l.getWorld().getWorldBorder();
+    public static boolean isOutsideOfBorder(Location l, IArena a) {
+        /*WorldBorder border = l.getWorld().getWorldBorder();
         double radius = (border.getSize() / 2) + border.getWarningDistance();
         Location center = border.getCenter();
-        return center.distance(l) >= radius;
+        return center.distance(l) >= radius;*/
+        //Use place prevention area instead of world border
+        return (Math.abs(l.getBlockX()) > a.getConfig().getInt("worldBorder")/2) ||
+                (Math.abs(l.getBlockZ()) > a.getConfig().getInt("worldBorder")/2) ||
+                (l.getBlockY() >= a.getConfig().getInt(ConfigPath.ARENA_CONFIGURATION_MAX_BUILD_Y)) ||
+                (l.getBlockY() <= a.getConfig().getInt(ConfigPath.ARENA_CONFIGURATION_MIN_BUILD_Y));
     }
 
     /**
@@ -397,7 +402,7 @@ public class Misc {
                 return true;
             }
         }
-        return isOutsideOfBorder(l);
+        return isOutsideOfBorder(l, a);
     }
 
     /**

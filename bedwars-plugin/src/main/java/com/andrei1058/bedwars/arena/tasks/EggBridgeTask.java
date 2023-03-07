@@ -86,7 +86,7 @@ public class EggBridgeTask implements Runnable {
             return;
         }
 
-        if (getPlayer().getLocation().distance(loc) > 4.0D) {
+        if (getPlayer().getLocation().distance(loc) > 2.0D) {
 
             Block b2 = loc.clone().subtract(0.0D, 2.0D, 0.0D).getBlock();
             if (!Misc.isBuildProtected(b2.getLocation(), getArena())) {
