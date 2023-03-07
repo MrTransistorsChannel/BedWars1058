@@ -47,9 +47,11 @@ public class ArenaConfig extends ConfigManager {
         yml.addDefault(ConfigPath.ARENA_ISLAND_RADIUS, 17);
         yml.addDefault("worldBorder", 300);
         yml.addDefault(ConfigPath.ARENA_Y_LEVEL_KILL, -1);
+        //TODO: add this
         //yml.addDefault("disableGeneratorsOnOrphanIslands", false);
         yml.addDefault(ConfigPath.ARENA_CONFIGURATION_MAX_BUILD_Y, 180);
         yml.addDefault(ConfigPath.ARENA_CONFIGURATION_MIN_BUILD_Y, 60);
+
         yml.addDefault(ConfigPath.ARENA_DISABLE_GENERATOR_FOR_EMPTY_TEAMS, false);
         yml.addDefault(ConfigPath.ARENA_DISABLE_NPCS_FOR_EMPTY_TEAMS, true);
         yml.addDefault(ConfigPath.ARENA_NORMAL_DEATH_DROPS, false);

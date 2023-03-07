@@ -41,6 +41,7 @@ import com.andrei1058.bedwars.popuptower.TowerEast;
 import com.andrei1058.bedwars.popuptower.TowerNorth;
 import com.andrei1058.bedwars.popuptower.TowerSouth;
 import com.andrei1058.bedwars.popuptower.TowerWest;
+import net.md_5.bungee.api.ChatColor;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -158,10 +159,32 @@ public class BreakPlace implements Listener {
                 return;
             }
             if (e.getBlockPlaced().getLocation().getBlockY() >= a.getConfig().getInt(ConfigPath.ARENA_CONFIGURATION_MAX_BUILD_Y)) {
+                p.sendMessage(getMsg(p, Messages.INTERACT_CANNOT_PLACE_BLOCK));
                 e.setCancelled(true);
                 return;
             }
             if (e.getBlockPlaced().getLocation().getBlockY() <= a.getConfig().getInt(ConfigPath.ARENA_CONFIGURATION_MIN_BUILD_Y)) {
+                p.sendMessage(getMsg(p, Messages.INTERACT_CANNOT_PLACE_BLOCK));
+                e.setCancelled(true);
+                return;
+            }
+            if (e.getBlockPlaced().getLocation().getBlockX() > a.getConfig().getInt("worldBorder")) {
+                p.sendMessage(getMsg(p, Messages.INTERACT_CANNOT_PLACE_BLOCK));
+                e.setCancelled(true);
+                return;
+            }
+            if (e.getBlockPlaced().getLocation().getBlockX() < -a.getConfig().getInt("worldBorder")) {
+                p.sendMessage(getMsg(p, Messages.INTERACT_CANNOT_PLACE_BLOCK));
+                e.setCancelled(true);
+                return;
+            }
+            if (e.getBlockPlaced().getLocation().getBlockZ() > a.getConfig().getInt("worldBorder")) {
+                p.sendMessage(getMsg(p, Messages.INTERACT_CANNOT_PLACE_BLOCK));
+                e.setCancelled(true);
+                return;
+            }
+            if (e.getBlockPlaced().getLocation().getBlockZ() < -a.getConfig().getInt("worldBorder")) {
+                p.sendMessage(getMsg(p, Messages.INTERACT_CANNOT_PLACE_BLOCK));
                 e.setCancelled(true);
                 return;
             }
