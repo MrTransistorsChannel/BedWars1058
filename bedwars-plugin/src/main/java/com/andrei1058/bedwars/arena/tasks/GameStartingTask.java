@@ -111,6 +111,7 @@ public class GameStartingTask implements Runnable, StartingTask {
                         for (IGenerator gen : team.getGenerators()) {
                             gen.disable();
                         }
+                        team.getGenerators().clear();
                     }
                 }
             }

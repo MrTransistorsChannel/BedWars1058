@@ -489,12 +489,12 @@ public class DamageDeathMove implements Listener {
             }
 
 
-            if (victimsTeam.isBedDestroyed() && victimsTeam.getSize() == 1 &&  a.getConfig().getBoolean(ConfigPath.ARENA_DISABLE_GENERATOR_FOR_EMPTY_TEAMS)) {
+            /*if (victimsTeam.isBedDestroyed() && victimsTeam.getSize() == 1 &&  a.getConfig().getBoolean(ConfigPath.ARENA_DISABLE_GENERATOR_FOR_EMPTY_TEAMS)) {
                 for (IGenerator g : victimsTeam.getGenerators()) {
                     g.disable();
                 }
                 victimsTeam.getGenerators().clear();
-            }
+            }*/
         }
     }
 
