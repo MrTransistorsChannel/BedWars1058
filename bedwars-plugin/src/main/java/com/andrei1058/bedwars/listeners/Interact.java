@@ -111,6 +111,7 @@ public class Interact implements Listener {
             } else {
                 List<String> disableInteracts = config.getList(ConfigPath.GENERAL_CONFIGURATION_DISABLE_INTERACTS);
                 for (String item: disableInteracts) {
+                    item = item.toUpperCase();
                     if(b.getType() == Material.getMaterial(item)) {
                         e.setCancelled(true);
                     }
