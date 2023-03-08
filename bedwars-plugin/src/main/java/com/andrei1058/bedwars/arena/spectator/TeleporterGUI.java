@@ -22,6 +22,7 @@ package com.andrei1058.bedwars.arena.spectator;
 
 import com.andrei1058.bedwars.BedWars;
 import com.andrei1058.bedwars.api.arena.IArena;
+import com.andrei1058.bedwars.api.arena.team.ITeam;
 import com.andrei1058.bedwars.api.language.Messages;
 import com.andrei1058.bedwars.arena.Arena;
 import org.bukkit.Bukkit;
@@ -116,16 +117,22 @@ public class TeleporterGUI {
     private static ItemStack createHead(Player targetPlayer, Player GUIholder) {
         ItemStack i = nms.getPlayerHead(targetPlayer, null);
         ItemMeta im = i.getItemMeta();
+        IArena a = Arena.getArenaByPlayer(targetPlayer);
+        ITeam t = a.getTeam(targetPlayer);
         assert im != null;
         im.setDisplayName(getMsg(GUIholder, Messages.ARENA_SPECTATOR_TELEPORTER_GUI_HEAD_NAME)
                 .replace("{vPrefix}", BedWars.getChatSupport().getPrefix(targetPlayer))
                 .replace("{vSuffix}", BedWars.getChatSupport().getSuffix(targetPlayer))
                 .replace("{player}", targetPlayer.getDisplayName())
-                .replace("{playername}", targetPlayer.getName()));
+                .replace("{playername}", targetPlayer.getName())
+                .replace("{TeamColor}", String.valueOf(t.getColor().chat().toString()))
+                .replace("{TeamName}", String.valueOf(t.getName())));
         List<String> lore = new ArrayList<>();
         String health = String.valueOf((int)targetPlayer.getHealth() * 100 / targetPlayer.getHealthScale());
         for (String s : getList(GUIholder, Messages.ARENA_SPECTATOR_TELEPORTER_GUI_HEAD_LORE)) {
-            lore.add(s.replace("{health}", health).replace("{food}", String.valueOf(targetPlayer.getFoodLevel())));
+            lore.add(s.replace("{health}", health)
+                    .replace("{TeamColor}", String.valueOf(t.getColor().chat().toString()))
+                    .replace("{TeamName}", String.valueOf(t.getName())));
         }
         im.setLore(lore);
         i.setItemMeta(im);
