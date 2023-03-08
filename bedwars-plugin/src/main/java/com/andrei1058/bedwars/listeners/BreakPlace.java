@@ -200,7 +200,7 @@ public class BreakPlace implements Listener {
             if (e.getBlock().getType() == Material.TNT) {
                 e.getBlockPlaced().setType(Material.AIR);
                 TNTPrimed tnt = Objects.requireNonNull(e.getBlock().getLocation().getWorld()).spawn(e.getBlock().getLocation().add(0.5, 0, 0.5), TNTPrimed.class);
-                tnt.setFuseTicks(45);
+                tnt.setFuseTicks(52);
                 nms.setSource(tnt, p);
                 return;
             } else if (BedWars.shop.getBoolean(ConfigPath.SHOP_SPECIAL_TOWER_ENABLE)) {
