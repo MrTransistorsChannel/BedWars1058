@@ -24,6 +24,7 @@ import com.andrei1058.bedwars.BedWars;
 import com.andrei1058.bedwars.api.arena.IArena;
 import com.andrei1058.bedwars.api.command.ParentCommand;
 import com.andrei1058.bedwars.api.command.SubCommand;
+import com.andrei1058.bedwars.api.configuration.ConfigPath;
 import com.andrei1058.bedwars.arena.Arena;
 import com.andrei1058.bedwars.arena.Misc;
 import com.andrei1058.bedwars.arena.SetupSession;
@@ -79,7 +80,8 @@ public class EnableArena extends SubCommand {
             return true;
         }
         p.sendMessage("§6 ▪ §7Enabling arena...");
-        new Arena(args[0], p);
+        IArena a = new Arena(args[0], p);
+        a.getConfig().set(ConfigPath.ARENA_ENABLE, true);
         return true;
     }
 
