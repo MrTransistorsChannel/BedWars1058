@@ -29,6 +29,7 @@ import com.andrei1058.bedwars.arena.Arena;
 import com.andrei1058.bedwars.arena.Misc;
 import com.andrei1058.bedwars.arena.SetupSession;
 import com.andrei1058.bedwars.commands.bedwars.MainCommand;
+import com.andrei1058.bedwars.configuration.ArenaConfig;
 import com.andrei1058.bedwars.configuration.Permissions;
 import net.md_5.bungee.api.chat.ClickEvent;
 import org.bukkit.command.CommandSender;
@@ -80,8 +81,9 @@ public class EnableArena extends SubCommand {
             return true;
         }
         p.sendMessage("§6 ▪ §7Enabling arena...");
-        IArena a = new Arena(args[0], p);
-        a.getConfig().set(ConfigPath.ARENA_ENABLE, true);
+        ArenaConfig ac = new ArenaConfig(BedWars.plugin, args[0], plugin.getDataFolder().getPath() + "/Arenas");
+        ac.set(ConfigPath.ARENA_ENABLE, true);
+        new Arena(args[0], p);
         return true;
     }
 
