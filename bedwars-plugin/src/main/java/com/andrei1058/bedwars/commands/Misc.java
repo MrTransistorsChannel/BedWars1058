@@ -21,6 +21,7 @@
 package com.andrei1058.bedwars.commands;
 
 import com.andrei1058.bedwars.BedWars;
+import com.andrei1058.bedwars.api.server.ServerType;
 import com.andrei1058.bedwars.arena.SetupSession;
 import com.andrei1058.bedwars.support.paper.PaperSupport;
 import org.bukkit.Bukkit;
@@ -33,9 +34,17 @@ import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.metadata.FixedMetadataValue;
+import org.bukkit.plugin.Plugin;
 import org.jetbrains.annotations.NotNull;
 
+import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
+import java.util.Random;
+
+import static com.andrei1058.bedwars.BedWars.autoscale;
+import static com.andrei1058.bedwars.BedWars.serverType;
 
 public class Misc {
 
@@ -45,6 +54,40 @@ public class Misc {
      *
      * @since api v6
      */
+    public static List<String> getConfiguredArenas(Plugin plugin) {
+        List<String> arenaNames = new ArrayList<>();
+        File dir = new File(plugin.getDataFolder(), "/Arenas");
+        if (!dir.exists())
+            return null;
+
+        List<File> files = new ArrayList<>();
+        File[] fls = dir.listFiles();
+        for (File fl : Objects.requireNonNull(fls)) {
+            if (fl.isFile()) {
+                if (fl.getName().endsWith(".yml")) {
+                    files.add(fl);
+                }
+            }
+        }
+
+        if (serverType == ServerType.BUNGEE && !autoscale) {
+            if (files.isEmpty()) {
+                plugin.getLogger().log(java.util.logging.Level.WARNING, "Could not find any arena!");
+                return null;
+            }
+            Random r = new Random();
+            int x = r.nextInt(files.size());
+            String name = files.get(x).getName().replace(".yml", "");
+            arenaNames.add(name);
+        } else {
+            for (File file : files) {
+                arenaNames.add(file.getName().replace(".yml", ""));
+            }
+        }
+        return arenaNames;
+
+    }
+
     public static void createArmorStand(String name, @NotNull Location location, String configLoc) {
         ArmorStand a = (ArmorStand) location.getWorld().spawnEntity(location.getBlock().getLocation().add(0.5, 2, 0.5), EntityType.ARMOR_STAND);
         a.setVisible(false);
@@ -66,9 +109,9 @@ public class Misc {
             if (e.hasMetadata("bw1058-setup")) {
                 if (e.hasMetadata("bw1058-loc")) {
                     if (e.getMetadata("bw1058-loc").get(0).asString().equalsIgnoreCase(configLoc)) {
-                        if (contains != null){
-                            if (!contains.isEmpty()){
-                                if (ChatColor.stripColor(e.getCustomName()).contains(contains)){
+                        if (contains != null) {
+                            if (!contains.isEmpty()) {
+                                if (ChatColor.stripColor(e.getCustomName()).contains(contains)) {
                                     e.remove();
                                     return;
                                 }

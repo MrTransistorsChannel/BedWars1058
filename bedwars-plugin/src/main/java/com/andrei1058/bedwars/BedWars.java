@@ -39,6 +39,7 @@ import com.andrei1058.bedwars.arena.tasks.OneTick;
 import com.andrei1058.bedwars.arena.tasks.Refresh;
 import com.andrei1058.bedwars.arena.upgrades.BaseListener;
 import com.andrei1058.bedwars.arena.upgrades.HealPoolListner;
+import com.andrei1058.bedwars.commands.Misc;
 import com.andrei1058.bedwars.commands.bedwars.MainCommand;
 import com.andrei1058.bedwars.commands.leave.LeaveCommand;
 import com.andrei1058.bedwars.commands.party.PartyCommand;
@@ -109,7 +110,7 @@ import java.util.*;
 @SuppressWarnings("WeakerAccess")
 public class BedWars extends JavaPlugin {
 
-    private static ServerType serverType = ServerType.MULTIARENA;
+    public static ServerType serverType = ServerType.MULTIARENA;
     public static boolean debug = true, autoscale = false;
     public static String mainCmd = "bw", link = "https://www.spigotmc.org/resources/50942/";
     public static ConfigManager signs, generators;
@@ -643,33 +644,11 @@ public class BedWars extends JavaPlugin {
 
         api.getRestoreAdapter().convertWorlds();
 
-        File dir = new File(plugin.getDataFolder(), "/Arenas");
-        if (dir.exists()) {
-            List<File> files = new ArrayList<>();
-            File[] fls = dir.listFiles();
-            for (File fl : Objects.requireNonNull(fls)) {
-                if (fl.isFile()) {
-                    if (fl.getName().endsWith(".yml")) {
-                        files.add(fl);
-                    }
-                }
-            }
-
-            if (serverType == ServerType.BUNGEE && !autoscale) {
-                if (files.isEmpty()) {
-                    this.getLogger().log(java.util.logging.Level.WARNING, "Could not find any arena!");
-                    return;
-                }
-                Random r = new Random();
-                int x = r.nextInt(files.size());
-                String name = files.get(x).getName().replace(".yml", "");
-                new Arena(name, null);
-            } else {
-                for (File file : files) {
-                    new Arena(file.getName().replace(".yml", ""), null);
-                }
-            }
-        }
+        List<String> arenaNames = Misc.getConfiguredArenas(this);
+        if(arenaNames == null)
+            return;
+        for(String name : arenaNames)
+            new Arena(name, null);
     }
 
     public static void registerEvents(Listener... listeners) {
