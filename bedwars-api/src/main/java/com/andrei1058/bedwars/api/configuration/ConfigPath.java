@@ -205,6 +205,7 @@ public class ConfigPath {
     public static final String GENERAL_CONFIGURATION_ALLOW_PARTIES = GENERAL_PARTY_SETTINGS_PATH + ".allow-parties";
     public static final String GENERAL_ALESSIODP_PARTIES_RANK = GENERAL_PARTY_SETTINGS_PATH + ".alessioDP-choose-arena-rank";
 
+    public static final String GENERAL_TNT_FUSE_TIME = "tnt-fuse-time";
     private static final String GENERAL_TNT_JUMP_PATH = "tnt-jump-settings";
     public static final String GENERAL_TNT_JUMP_BARYCENTER_IN_Y = GENERAL_TNT_JUMP_PATH + ".barycenter-alteration-in-y";
     public static final String GENERAL_TNT_JUMP_STRENGTH_REDUCTION = GENERAL_TNT_JUMP_PATH + ".strength-reduction-constant";
