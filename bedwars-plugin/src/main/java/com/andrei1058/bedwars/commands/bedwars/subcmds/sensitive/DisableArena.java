@@ -68,7 +68,7 @@ public class DisableArena extends SubCommand {
             return true;
         }
         p.sendMessage("§6 ▪ §7Disabling arena...");
-        a.getConfig().set(ConfigPath.ARENA_ENABLE, false);
+        a.getConfig().set(ConfigPath.ARENA_ENABLED, false);
         a.disable();
         return true;
     }

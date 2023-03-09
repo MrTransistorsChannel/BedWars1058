@@ -36,7 +36,7 @@ public class ArenaConfig extends ConfigManager {
         yml.options().header(plugin.getName() + " arena configuration file.\n" +
                 "Documentation here: https://gitlab.com/andrei1058/BedWars1058/wikis/configuration/Arena-Configuration");
         yml.addDefault("group", "Default");
-        yml.addDefault(ConfigPath.ARENA_ENABLE, false);
+        yml.addDefault(ConfigPath.ARENA_ENABLED, false);
         yml.addDefault(ConfigPath.ARENA_DISPLAY_NAME, "");
         yml.addDefault("minPlayers", 2);
         yml.addDefault("maxInTeam", 1);

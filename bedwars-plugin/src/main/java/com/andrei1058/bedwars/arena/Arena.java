@@ -188,7 +188,7 @@ public class Arena implements IArena {
      */
     public Arena(String name, Player p) {
         cm = new ArenaConfig(BedWars.plugin, name, plugin.getDataFolder().getPath() + "/Arenas");
-        if(!cm.getBoolean(ConfigPath.ARENA_ENABLE)) return;
+        if(!cm.getBoolean(ConfigPath.ARENA_ENABLED)) return;
 
         if (!autoscale) {
             for (IArena mm : enableQueue) {

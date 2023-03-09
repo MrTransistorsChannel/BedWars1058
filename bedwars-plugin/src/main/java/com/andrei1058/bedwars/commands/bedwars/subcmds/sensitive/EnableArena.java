@@ -82,7 +82,7 @@ public class EnableArena extends SubCommand {
         }
         p.sendMessage("§6 ▪ §7Enabling arena...");
         ArenaConfig ac = new ArenaConfig(BedWars.plugin, args[0], plugin.getDataFolder().getPath() + "/Arenas");
-        ac.set(ConfigPath.ARENA_ENABLE, true);
+        ac.set(ConfigPath.ARENA_ENABLED, true);
         new Arena(args[0], p);
         return true;
     }
