@@ -112,6 +112,7 @@ public class GamePlayingTask implements Runnable, PlayingTask {
                 viewPos.setMarker(true);
                 p.setSpectatorTarget(viewPos);
             }
+            return;
         }
         else{
             for (Player p : arena.getPlayers()) {
