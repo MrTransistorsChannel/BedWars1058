@@ -100,11 +100,13 @@ public class GamePlayingTask implements Runnable, PlayingTask {
             }
             return;
         }*/
-        if (arena.getStatus() == GameState.paused) {
+        if (arena.isPaused()) {
             for (Player p : arena.getPlayers()) {
+                BedWars.nms.sendTitle(p, ChatColor.RED + "Пауза", ChatColor.WHITE + "Подождите некоторое время...", 0, 20, 10);
                 if (p.getGameMode() == GameMode.SPECTATOR) continue;
                 ArmorStand viewPos = (ArmorStand) p.getWorld().spawnEntity(p.getEyeLocation(), EntityType.ARMOR_STAND);
                 p.setGameMode(GameMode.SPECTATOR);
+                viewPos.setPassenger(p);
                 viewPos.setVisible(false);
                 viewPos.setGravity(false);
                 viewPos.setMarker(true);
@@ -114,6 +116,7 @@ public class GamePlayingTask implements Runnable, PlayingTask {
         else{
             for (Player p : arena.getPlayers()) {
                 if (p.getGameMode() != GameMode.SPECTATOR) continue;
+                BedWars.nms.sendTitle(p, ChatColor.RED + "Пауза окончена", "", 0, 20, 10);
                 p.getSpectatorTarget().remove();
                 p.setGameMode(GameMode.SURVIVAL);
             }

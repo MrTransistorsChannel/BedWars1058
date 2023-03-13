@@ -179,6 +179,16 @@ public class Arena implements IArena {
     private Instant startTime;
     private ITeamAssigner teamAssigner = new TeamAssigner();
 
+    private boolean isPaused = false;
+
+    public boolean isPaused(){
+        return isPaused;
+    }
+
+    public void setPaused(boolean state){
+        isPaused = state;
+    }
+
     /**
      * Load an arena.
      * This will check if it was set up right.

@@ -48,10 +48,7 @@ public class CmdPause extends SubCommand {
             return true;
         }
 
-        if(a.getStatus() == GameState.playing)
-            a.setStatus(GameState.paused);
-        else if(a.getStatus() == GameState.paused)
-            a.setStatus(GameState.playing);
+        a.setPaused(!a.isPaused());
 
         return true;
     }
