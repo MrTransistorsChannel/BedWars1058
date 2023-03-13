@@ -103,6 +103,7 @@ public class GamePlayingTask implements Runnable, PlayingTask {
         if (arena.getStatus() == GameState.paused) {
             for (Player p : arena.getPlayers()) {
                 if (p.getGameMode() == GameMode.SPECTATOR) continue;
+                p.setGameMode(GameMode.SPECTATOR);
                 ArmorStand viewPos = (ArmorStand) p.getWorld().spawnEntity(p.getLocation(), EntityType.ARMOR_STAND);
                 viewPos.setVisible(false);
                 viewPos.setGravity(false);
