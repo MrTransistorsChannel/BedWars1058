@@ -35,18 +35,20 @@ import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.plugin.Plugin;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
-import java.util.Random;
+import java.util.*;
 
 import static com.andrei1058.bedwars.BedWars.autoscale;
 import static com.andrei1058.bedwars.BedWars.serverType;
 
 public class Misc {
+
+    public static List<PotionEffect> stallEffects = Arrays.asList(new PotionEffect(PotionEffectType.SLOW, 2, 255),
+            new PotionEffect(PotionEffectType.SLOW_DIGGING, 2, 255));
 
     /**
      * This is used to spawn armorStands during the setup

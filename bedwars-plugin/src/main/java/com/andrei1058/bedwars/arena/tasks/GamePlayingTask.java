@@ -31,12 +31,19 @@ import com.andrei1058.bedwars.api.language.Language;
 import com.andrei1058.bedwars.api.language.Messages;
 import com.andrei1058.bedwars.api.tasks.PlayingTask;
 import com.andrei1058.bedwars.arena.Arena;
+import com.andrei1058.bedwars.commands.Misc;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitTask;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
 
 import static com.andrei1058.bedwars.BedWars.nms;
@@ -87,8 +94,13 @@ public class GamePlayingTask implements Runnable, PlayingTask {
     @Override
     public void run() {
 
-        if(arena.getStatus() == GameState.paused)
+        if(arena.getStatus() == GameState.paused){
+            for(Player p : arena.getPlayers()){
+                BedWars.nms.sendTitle(p, ChatColor.RED + "Пауза", ChatColor.WHITE + "Подождите некоторое время...", 0, 40, 10);
+                p.addPotionEffects(Misc.stallEffects);
+            }
             return;
+        }
 
         switch (getArena().getNextEvent()) {
             case EMERALD_GENERATOR_TIER_II:
