@@ -45,7 +45,7 @@ import static com.andrei1058.bedwars.api.language.Language.getMsg;
 public class GamePlayingTask implements Runnable, PlayingTask {
 
     private Arena arena;
-    private BukkitTask task;
+    public BukkitTask task;
     private int beds_destroy_countdown, dragon_spawn_countdown, game_end_countdown;
 
     public GamePlayingTask(Arena arena) {
