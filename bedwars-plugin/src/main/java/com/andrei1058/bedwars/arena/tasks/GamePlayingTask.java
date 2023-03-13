@@ -86,6 +86,10 @@ public class GamePlayingTask implements Runnable, PlayingTask {
 
     @Override
     public void run() {
+
+        if(arena.getStatus() == GameState.paused)
+            return;
+
         switch (getArena().getNextEvent()) {
             case EMERALD_GENERATOR_TIER_II:
             case EMERALD_GENERATOR_TIER_III:
