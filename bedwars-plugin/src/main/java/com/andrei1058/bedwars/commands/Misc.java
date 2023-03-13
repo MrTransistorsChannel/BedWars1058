@@ -47,8 +47,11 @@ import static com.andrei1058.bedwars.BedWars.serverType;
 
 public class Misc {
 
-    public static List<PotionEffect> stallEffects = Arrays.asList(new PotionEffect(PotionEffectType.SLOW, 40, 255),
-            new PotionEffect(PotionEffectType.SLOW_DIGGING, 40, 255));
+    public static List<PotionEffect> stallEffects = Arrays.asList(
+            new PotionEffect(PotionEffectType.SLOW, 60, 255),
+            new PotionEffect(PotionEffectType.SLOW_DIGGING, 60, 255),
+            new PotionEffect(PotionEffectType.JUMP, 60, 128),
+            new PotionEffect(PotionEffectType.BLINDNESS, 60, 255));
 
     /**
      * This is used to spawn armorStands during the setup

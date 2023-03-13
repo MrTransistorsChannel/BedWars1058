@@ -96,7 +96,7 @@ public class GamePlayingTask implements Runnable, PlayingTask {
 
         if(arena.getStatus() == GameState.paused){
             for(Player p : arena.getPlayers()){
-                BedWars.nms.sendTitle(p, ChatColor.RED + "Пауза", ChatColor.WHITE + "Подождите некоторое время...", 0, 40, 10);
+                BedWars.nms.sendTitle(p, ChatColor.RED + "Пауза", ChatColor.WHITE + "Подождите некоторое время...", 0, 20, 10);
                 p.addPotionEffects(Misc.stallEffects);
             }
             return;
