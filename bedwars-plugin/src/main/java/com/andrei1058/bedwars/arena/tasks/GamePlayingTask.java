@@ -32,10 +32,9 @@ import com.andrei1058.bedwars.api.language.Messages;
 import com.andrei1058.bedwars.api.tasks.PlayingTask;
 import com.andrei1058.bedwars.arena.Arena;
 import com.andrei1058.bedwars.commands.Misc;
-import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
-import org.bukkit.Location;
-import org.bukkit.Material;
+import org.bukkit.*;
+import org.bukkit.entity.ArmorStand;
+import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
@@ -94,13 +93,31 @@ public class GamePlayingTask implements Runnable, PlayingTask {
     @Override
     public void run() {
 
-        if(arena.getStatus() == GameState.paused){
+        /*if(arena.getStatus() == GameState.paused){
             for(Player p : arena.getPlayers()){
                 BedWars.nms.sendTitle(p, ChatColor.RED + "Пауза", ChatColor.WHITE + "Подождите некоторое время...", 0, 20, 10);
                 p.addPotionEffects(Misc.stallEffects);
             }
             return;
+        }*/
+        if (arena.getStatus() == GameState.paused) {
+            for (Player p : arena.getPlayers()) {
+                if (p.getGameMode() == GameMode.SPECTATOR) continue;
+                ArmorStand viewPos = (ArmorStand) p.getWorld().spawnEntity(p.getLocation(), EntityType.ARMOR_STAND);
+                viewPos.setVisible(false);
+                viewPos.setGravity(false);
+                viewPos.setMarker(true);
+                p.setSpectatorTarget(viewPos);
+            }
         }
+        else{
+            for (Player p : arena.getPlayers()) {
+                if (p.getGameMode() != GameMode.SPECTATOR) continue;
+                p.getSpectatorTarget().remove();
+                p.setGameMode(GameMode.SURVIVAL);
+            }
+        }
+
 
         switch (getArena().getNextEvent()) {
             case EMERALD_GENERATOR_TIER_II:
