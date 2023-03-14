@@ -109,27 +109,30 @@ public class GamePlayingTask implements Runnable, PlayingTask {
             for (Player p : arena.getPlayers()) {
                 BedWars.nms.sendTitle(p, ChatColor.RED + "Пауза", ChatColor.WHITE + "Подождите некоторое время...", 0, 20, 10);
                 if (p.getGameMode() == GameMode.SPECTATOR) continue;
-                ArmorStand viewPos = (ArmorStand) p.getWorld().spawnEntity(p.getEyeLocation(), EntityType.ARMOR_STAND);
+                ArmorStand viewPos = (ArmorStand) p.getWorld().spawnEntity(p.getLocation(), EntityType.ARMOR_STAND);
                 p.setGameMode(GameMode.SPECTATOR);
                 viewPos.setPassenger(p);
                 switch (arena.getTeam(p).getColor()){
                     case RED:
+                        viewPos.setCustomName(ChatColor.RED + p.getDisplayName());
                         viewPos.setHelmet(new ItemStack(Material.WOOL, 1, (byte) 14));
                         break;
                     case BLUE:
+                        viewPos.setCustomName(ChatColor.BLUE + p.getDisplayName());
                         viewPos.setHelmet(new ItemStack(Material.WOOL, 1, (byte) 11));
                         break;
                     case GREEN:
+                        viewPos.setCustomName(ChatColor.GREEN + p.getDisplayName());
                         viewPos.setHelmet(new ItemStack(Material.WOOL, 1, (byte) 5));
                         break;
                     case YELLOW:
+                        viewPos.setCustomName(ChatColor.YELLOW + p.getDisplayName());
                         viewPos.setHelmet(new ItemStack(Material.WOOL, 1, (byte) 4));
                         break;
                 }
                 viewPos.setCustomName(p.getDisplayName());
                 viewPos.setCustomNameVisible(true);
                 viewPos.setGravity(false);
-                viewPos.setMarker(false);
                 p.setSpectatorTarget(viewPos);
             }
             return;
