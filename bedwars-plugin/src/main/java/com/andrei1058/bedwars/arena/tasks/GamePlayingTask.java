@@ -40,6 +40,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.SkullMeta;
+import org.bukkit.material.Wool;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitTask;
@@ -111,11 +112,20 @@ public class GamePlayingTask implements Runnable, PlayingTask {
                 ArmorStand viewPos = (ArmorStand) p.getWorld().spawnEntity(p.getEyeLocation(), EntityType.ARMOR_STAND);
                 p.setGameMode(GameMode.SPECTATOR);
                 viewPos.setPassenger(p);
-                ItemStack playerhead = new ItemStack(Material.SKULL, 1, (short)3);
-                SkullMeta skull = (SkullMeta) playerhead.getItemMeta();
-                skull.setOwner(p.getName());
-                playerhead.setItemMeta(skull);
-                viewPos.setHelmet(playerhead);
+                switch (arena.getTeam(p).getColor()){
+                    case RED:
+                        viewPos.setHelmet(new ItemStack(Material.WOOL, 1, (byte) 14));
+                        break;
+                    case BLUE:
+                        viewPos.setHelmet(new ItemStack(Material.WOOL, 1, (byte) 11));
+                        break;
+                    case GREEN:
+                        viewPos.setHelmet(new ItemStack(Material.WOOL, 1, (byte) 5));
+                        break;
+                    case YELLOW:
+                        viewPos.setHelmet(new ItemStack(Material.WOOL, 1, (byte) 4));
+                        break;
+                }
                 viewPos.setCustomName(p.getDisplayName());
                 viewPos.setGravity(false);
                 viewPos.setMarker(true);
