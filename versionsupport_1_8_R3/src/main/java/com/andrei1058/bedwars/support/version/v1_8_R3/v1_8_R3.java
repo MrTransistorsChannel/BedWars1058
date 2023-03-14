@@ -32,6 +32,7 @@ import com.andrei1058.bedwars.api.language.Messages;
 import com.andrei1058.bedwars.api.server.VersionSupport;
 import com.andrei1058.bedwars.support.version.common.VersionCommon;
 import net.minecraft.server.v1_8_R3.*;
+import org.bukkit.ChatColor;
 import org.bukkit.Color;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -42,6 +43,7 @@ import org.bukkit.craftbukkit.v1_8_R3.entity.*;
 import org.bukkit.craftbukkit.v1_8_R3.inventory.CraftItemStack;
 import org.bukkit.craftbukkit.v1_8_R3.util.UnsafeList;
 import org.bukkit.entity.*;
+import org.bukkit.entity.Entity;
 import org.bukkit.event.entity.CreatureSpawnEvent;
 import org.bukkit.event.inventory.InventoryEvent;
 import org.bukkit.inventory.ItemStack;
@@ -385,7 +387,9 @@ public class v1_8_R3 extends VersionSupport {
 
     @Override
     public void spawnDragon(Location l, ITeam bwt) {
-        l.getWorld().spawnEntity(l, EntityType.ENDER_DRAGON);
+        Entity ed = l.getWorld().spawnEntity(l, EntityType.ENDER_DRAGON);
+        String colorName = bwt.getColor().name();
+        ed.setCustomName(ChatColor.valueOf(colorName) + colorName.substring(0, 1).toUpperCase() + colorName.substring(1) + " Ender Dragon");
     }
 
     @Override
