@@ -131,6 +131,7 @@ public class GamePlayingTask implements Runnable, PlayingTask {
                         break;
                 }
                 viewPos.setArms(true);
+                viewPos.setBasePlate(false);
                 viewPos.setCustomNameVisible(true);
                 viewPos.setGravity(false);
                 viewPos.setChestplate(p.getInventory().getChestplate());
