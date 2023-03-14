@@ -127,6 +127,7 @@ public class GamePlayingTask implements Runnable, PlayingTask {
                         break;
                 }
                 viewPos.setCustomName(p.getDisplayName());
+                viewPos.setCustomNameVisible(true);
                 viewPos.setGravity(false);
                 viewPos.setMarker(true);
                 p.setSpectatorTarget(viewPos);
