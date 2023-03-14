@@ -130,9 +130,13 @@ public class GamePlayingTask implements Runnable, PlayingTask {
                         viewPos.setHelmet(new ItemStack(Material.WOOL, 1, (byte) 4));
                         break;
                 }
-                viewPos.setCustomName(p.getDisplayName());
+                viewPos.setArms(true);
                 viewPos.setCustomNameVisible(true);
                 viewPos.setGravity(false);
+                viewPos.setChestplate(p.getInventory().getChestplate());
+                viewPos.setLeggings(p.getInventory().getLeggings());
+                viewPos.setBoots(p.getInventory().getBoots());
+                viewPos.setItemInHand(p.getItemInHand());
                 p.setSpectatorTarget(viewPos);
             }
             return;
