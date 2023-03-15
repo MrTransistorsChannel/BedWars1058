@@ -231,7 +231,11 @@ public class GamePlayingTask implements Runnable, PlayingTask {
                 game_end_countdown--;
                 for(ITeam t : getArena().getTeams()){
                     for(EnderDragon ed : t.getDragonEntities()){
-                        Bukkit.getLogger().info(ChatColor.valueOf(t.getColor().name()) + "Ender dragon targeting " + ((CraftEnderDragon)ed).getHandle().target.getName());
+                        Entity edTarget = ((CraftEnderDragon)ed).getHandle().target.getBukkitEntity();
+                        if(edTarget == null || edTarget.getType() != EntityType.PLAYER) continue;
+                        if(t.wasMember(edTarget.getUniqueId())){
+                            Bukkit.getLogger().warning(t.getColor().name() + " ED targeting its own team member");
+                        }
                     }
                 }
                 if (getGameEndCountdown() == 0) {
