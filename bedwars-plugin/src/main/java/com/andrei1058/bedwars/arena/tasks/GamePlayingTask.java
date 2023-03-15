@@ -36,6 +36,7 @@ import net.minecraft.server.v1_8_R3.EntityLiving;
 import org.bukkit.*;
 import org.bukkit.craftbukkit.v1_8_R3.entity.CraftEnderDragon;
 import org.bukkit.craftbukkit.v1_8_R3.entity.CraftEntity;
+import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
 import org.bukkit.entity.*;
 import org.bukkit.event.entity.EntityTargetEvent;
 import org.bukkit.inventory.ItemStack;
@@ -237,8 +238,9 @@ public class GamePlayingTask implements Runnable, PlayingTask {
                         if(((CraftEnderDragon)ed).getHandle().target == null) continue;
                         CraftEntity edTarget = ((CraftEnderDragon)ed).getHandle().target.getBukkitEntity();
                         if(edTarget == null || edTarget.getType() != EntityType.PLAYER) continue;
+                        Bukkit.getLogger().info(edTarget.getName());
                         if(t.wasMember(edTarget.getUniqueId())){
-                            ((CraftEnderDragon)ed).getHandle().setGoalTarget((EntityLiving) edTarget.getHandle(), EntityTargetEvent.TargetReason.RANDOM_TARGET, true);
+                            ((CraftEnderDragon)ed).getHandle().target = ((CraftPlayer)Bukkit.getServer().getPlayer("MrTransistor_")).getHandle();
                         }
                     }
                 }
