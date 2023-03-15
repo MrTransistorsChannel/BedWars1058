@@ -198,7 +198,21 @@ public class GamePlayingTask implements Runnable, PlayingTask {
                                     .replace("{TeamColor}", t.getColor().chat().toString()).replace("{TeamName}", t.getDisplayName(Language.getPlayerLanguage(p))));
                         }
                     }
+
                     getArena().updateNextEvent();
+                    for (IGenerator o : arena.getOreGenerators()) {
+                        o.disable();
+                    }
+                    arena.getOreGenerators().clear();
+
+                    for (ITeam team : arena.getTeams()) {
+                        for (IGenerator o : team.getGenerators()) {
+
+                            o.disable();
+                        }
+                        team.getGenerators().clear();
+                    }
+
                     /*for (IGenerator o : arena.getOreGenerators()) {
                         Location l = o.getLocation();
                         for (int y = 0; y < 20; y++) {
