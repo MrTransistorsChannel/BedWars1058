@@ -97,13 +97,6 @@ public class GamePlayingTask implements Runnable, PlayingTask {
     @Override
     public void run() {
 
-        /*if(arena.getStatus() == GameState.paused){
-            for(Player p : arena.getPlayers()){
-                BedWars.nms.sendTitle(p, ChatColor.RED + "Пауза", ChatColor.WHITE + "Подождите некоторое время...", 0, 20, 10);
-                p.addPotionEffects(Misc.stallEffects);
-            }
-            return;
-        }*/
         if (arena.isPaused()) {
             for (Player p : arena.getPlayers()) {
                 BedWars.nms.sendTitle(p, ChatColor.RED + "Пауза", ChatColor.WHITE + "Подождите некоторое время...", 0, 20, 10);
@@ -230,24 +223,30 @@ public class GamePlayingTask implements Runnable, PlayingTask {
                 break;
             case GAME_END:
                 game_end_countdown--;
+
                 for(ITeam t : getArena().getTeams()){
                     for(EnderDragon ed : t.getDragonEntities()){
                         if(((CraftEnderDragon)ed).getHandle().target == null) continue;
                         CraftEntity edTarget = ((CraftEnderDragon)ed).getHandle().target.getBukkitEntity();
                         if(edTarget == null || edTarget.getType() != EntityType.PLAYER) continue;
-                        Bukkit.getLogger().info(edTarget.getName());
                         if(t.wasMember(edTarget.getUniqueId())){
                             Player randomEnemy;
                             do{
                                 randomEnemy = arena.getPlayers().get(new Random().nextInt(arena.getPlayers().size()));
-                                Bukkit.getLogger().info("Trying to set " + randomEnemy.getName() + " as new " + t.getName() + " dragon target");
                             } while(t.wasMember(randomEnemy.getUniqueId()));
-                            Bukkit.getLogger().info(t.getName() + " dragon is now targeting " + randomEnemy.getName());
                             ((CraftEnderDragon)ed).getHandle().target = ((CraftPlayer)randomEnemy).getHandle();
                         }
                     }
                 }
+
                 if (getGameEndCountdown() == 0) {
+                    // Remove ender dragons and clear players` inventories on game end
+                    for(ITeam t : arena.getTeams()){
+                        for(EnderDragon ed : t.getDragonEntities())
+                            ed.remove();
+                        for(Player p : t.getMembers())
+                            p.getInventory().clear();
+                    }
                     getArena().checkWinner();
                     getArena().changeStatus(GameState.restarting);
                 }
@@ -265,8 +264,8 @@ public class GamePlayingTask implements Runnable, PlayingTask {
                             distance = (int) p.getLocation().distance(p2.getLocation());
                         }
                     }
-                    nms.playAction(p, getMsg(p, Messages.FORMATTING_ACTION_BAR_TRACKING).replace("{team}", t.getColor().chat() + t.getDisplayName(Language.getPlayerLanguage(p)))
-                            .replace("{distance}", t.getColor().chat().toString() + distance).replace("&", "§"));
+                    /*nms.playAction(p, getMsg(p, Messages.FORMATTING_ACTION_BAR_TRACKING).replace("{team}", t.getColor().chat() + t.getDisplayName(Language.getPlayerLanguage(p)))
+                            .replace("{distance}", t.getColor().chat().toString() + distance).replace("&", "§"));*/
                 }
             }
 

@@ -74,10 +74,7 @@ import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.block.Sign;
 import org.bukkit.configuration.file.YamlConfiguration;
-import org.bukkit.entity.ArmorStand;
-import org.bukkit.entity.Entity;
-import org.bukkit.entity.EntityType;
-import org.bukkit.entity.Player;
+import org.bukkit.entity.*;
 import org.bukkit.event.player.PlayerTeleportEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
@@ -1857,6 +1854,14 @@ public class Arena implements IArena {
                 }
             }
             if (max - eliminated == 1) {
+                // Remove dragons and clear players` inventories on victory
+                for(ITeam t : getTeams()){
+                    for(EnderDragon ed : t.getDragonEntities())
+                        ed.remove();
+                    for(Player p : t.getMembers())
+                        p.getInventory().clear();
+                }
+
                 if (winner != null) {
                     if (!winner.getMembers().isEmpty()) {
                         for (Player p : winner.getMembers()) {
