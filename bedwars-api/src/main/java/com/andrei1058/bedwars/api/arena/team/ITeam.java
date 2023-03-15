@@ -26,11 +26,13 @@ import com.andrei1058.bedwars.api.language.Language;
 import com.andrei1058.bedwars.api.upgrades.EnemyBaseEnterTrap;
 import org.bukkit.Location;
 import org.bukkit.enchantments.Enchantment;
+import org.bukkit.entity.EnderDragon;
 import org.bukkit.entity.Player;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.util.Vector;
 
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.UUID;
@@ -302,6 +304,10 @@ public interface ITeam {
      * Get team dragons amount for the sudden death phase.
      */
     int getDragons();
+
+    List<EnderDragon> getDragonEntities();
+
+    void addDragonEntity(EnderDragon ed);
 
     /**
      * Set a team dragons amount for the sudden death phase.

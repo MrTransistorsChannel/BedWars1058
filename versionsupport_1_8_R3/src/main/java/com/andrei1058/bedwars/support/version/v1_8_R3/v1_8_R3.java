@@ -387,9 +387,10 @@ public class v1_8_R3 extends VersionSupport {
 
     @Override
     public void spawnDragon(Location l, ITeam bwt) {
-        Entity ed = l.getWorld().spawnEntity(l, EntityType.ENDER_DRAGON);
+        EnderDragon ed = (EnderDragon) l.getWorld().spawnEntity(l, EntityType.ENDER_DRAGON);
         String colorName = bwt.getColor().name();
-        ed.setCustomName(ChatColor.valueOf(colorName) + colorName.substring(0, 1).toUpperCase() + colorName.substring(1) + " Ender Dragon");
+        bwt.addDragonEntity(ed);
+        ed.setCustomName(ChatColor.valueOf(colorName) + colorName.substring(0, 1) + colorName.substring(1).toLowerCase() + " Ender Dragon");
     }
 
     @Override

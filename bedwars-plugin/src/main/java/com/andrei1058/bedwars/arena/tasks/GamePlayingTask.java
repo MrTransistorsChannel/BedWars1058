@@ -33,10 +33,8 @@ import com.andrei1058.bedwars.api.tasks.PlayingTask;
 import com.andrei1058.bedwars.arena.Arena;
 import com.andrei1058.bedwars.commands.Misc;
 import org.bukkit.*;
-import org.bukkit.entity.ArmorStand;
-import org.bukkit.entity.EntityType;
-import org.bukkit.entity.Item;
-import org.bukkit.entity.Player;
+import org.bukkit.craftbukkit.v1_8_R3.entity.CraftEnderDragon;
+import org.bukkit.entity.*;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.SkullMeta;
@@ -207,7 +205,7 @@ public class GamePlayingTask implements Runnable, PlayingTask {
                         }
                     }
                     getArena().updateNextEvent();
-                    for (IGenerator o : arena.getOreGenerators()) {
+                    /*for (IGenerator o : arena.getOreGenerators()) {
                         Location l = o.getLocation();
                         for (int y = 0; y < 20; y++) {
                             l.clone().subtract(0, y, 0).getBlock().setType(Material.AIR);
@@ -220,7 +218,7 @@ public class GamePlayingTask implements Runnable, PlayingTask {
                                 l.clone().subtract(0, y, 0).getBlock().setType(Material.AIR);
                             }
                         }
-                    }
+                    }*/
                     for (ITeam t : getArena().getTeams()) {
                         if (t.getMembers().isEmpty()) continue;
                         for (int x = 0; x < t.getDragons(); x++) {
@@ -231,6 +229,11 @@ public class GamePlayingTask implements Runnable, PlayingTask {
                 break;
             case GAME_END:
                 game_end_countdown--;
+                for(ITeam t : getArena().getTeams()){
+                    for(EnderDragon ed : t.getDragonEntities()){
+                        Bukkit.getLogger().info(ChatColor.valueOf(t.getColor().name()) + "Ender dragon targeting " + ((CraftEnderDragon)ed).getHandle().target.getName());
+                    }
+                }
                 if (getGameEndCountdown() == 0) {
                     getArena().checkWinner();
                     getArena().changeStatus(GameState.restarting);

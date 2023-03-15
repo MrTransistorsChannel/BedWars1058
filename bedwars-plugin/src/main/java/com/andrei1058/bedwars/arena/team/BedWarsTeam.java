@@ -41,6 +41,7 @@ import com.andrei1058.bedwars.support.paper.PaperSupport;
 import org.bukkit.*;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.ArmorStand;
+import org.bukkit.entity.EnderDragon;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.event.player.PlayerTeleportEvent;
@@ -49,6 +50,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.LeatherArmorMeta;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
+import org.bukkit.scoreboard.Team;
 import org.bukkit.util.Vector;
 import org.jetbrains.annotations.NotNull;
 
@@ -92,6 +94,8 @@ public class BedWarsTeam implements ITeam {
     private LinkedList<EnemyBaseEnterTrap> enemyBaseEnterTraps = new LinkedList<>();
     // Amount of dragons for Sudden Death phase
     private int dragons = 1;
+    // Ender dragon entities from this arena
+    private final List<EnderDragon> dragonEntities = new ArrayList<>();
     // Player cache, used for losers stats and rejoin
     private List<Player> membersCache = new ArrayList<>();
     // Invulnerability at re-spawn
@@ -806,6 +810,14 @@ public class BedWarsTeam implements ITeam {
 
     public int getDragons() {
         return dragons;
+    }
+
+    public List<EnderDragon> getDragonEntities(){
+        return dragonEntities;
+    }
+
+    public void addDragonEntity(EnderDragon ed){
+        dragonEntities.add(ed);
     }
 
     @Override
