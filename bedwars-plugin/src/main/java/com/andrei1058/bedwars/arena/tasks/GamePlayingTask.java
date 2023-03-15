@@ -239,7 +239,7 @@ public class GamePlayingTask implements Runnable, PlayingTask {
                         if(t.wasMember(edTarget.getUniqueId())){
                             Player randomEnemy;
                             do{
-                                randomEnemy = arena.getPlayers().get(new Random().nextInt());
+                                randomEnemy = arena.getPlayers().get(new Random().nextInt(arena.getPlayers().size()));
                                 Bukkit.getLogger().info("Trying to set " + randomEnemy.getName() + " as new " + t.getName() + " dragon target");
                             } while(t.wasMember(randomEnemy.getUniqueId()));
                             Bukkit.getLogger().info(t.getName() + " dragon is now targeting " + randomEnemy.getName());
