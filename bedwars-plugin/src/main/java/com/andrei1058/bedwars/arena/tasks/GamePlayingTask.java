@@ -37,6 +37,7 @@ import org.bukkit.*;
 import org.bukkit.craftbukkit.v1_8_R3.entity.CraftEnderDragon;
 import org.bukkit.craftbukkit.v1_8_R3.entity.CraftEntity;
 import org.bukkit.entity.*;
+import org.bukkit.event.entity.EntityTargetEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.SkullMeta;
@@ -237,7 +238,7 @@ public class GamePlayingTask implements Runnable, PlayingTask {
                         CraftEntity edTarget = ((CraftEnderDragon)ed).getHandle().target.getBukkitEntity();
                         if(edTarget == null || edTarget.getType() != EntityType.PLAYER) continue;
                         if(t.wasMember(edTarget.getUniqueId())){
-                            ((CraftEnderDragon)ed).getHandle().setGoalTarget((EntityLiving) edTarget.getHandle());
+                            ((CraftEnderDragon)ed).getHandle().setGoalTarget((EntityLiving) edTarget.getHandle(), EntityTargetEvent.TargetReason.RANDOM_TARGET, true);
                         }
                     }
                 }
