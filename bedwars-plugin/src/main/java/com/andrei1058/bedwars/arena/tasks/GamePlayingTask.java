@@ -32,8 +32,10 @@ import com.andrei1058.bedwars.api.language.Messages;
 import com.andrei1058.bedwars.api.tasks.PlayingTask;
 import com.andrei1058.bedwars.arena.Arena;
 import com.andrei1058.bedwars.commands.Misc;
+import net.minecraft.server.v1_8_R3.EntityLiving;
 import org.bukkit.*;
 import org.bukkit.craftbukkit.v1_8_R3.entity.CraftEnderDragon;
+import org.bukkit.craftbukkit.v1_8_R3.entity.CraftEntity;
 import org.bukkit.entity.*;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -231,10 +233,11 @@ public class GamePlayingTask implements Runnable, PlayingTask {
                 game_end_countdown--;
                 for(ITeam t : getArena().getTeams()){
                     for(EnderDragon ed : t.getDragonEntities()){
-                        Entity edTarget = ((CraftEnderDragon)ed).getHandle().target.getBukkitEntity();
+                        if(((CraftEnderDragon)ed).getHandle().target == null) continue;
+                        CraftEntity edTarget = ((CraftEnderDragon)ed).getHandle().target.getBukkitEntity();
                         if(edTarget == null || edTarget.getType() != EntityType.PLAYER) continue;
                         if(t.wasMember(edTarget.getUniqueId())){
-                            Bukkit.getLogger().warning(t.getColor().name() + " ED targeting its own team member");
+                            ((CraftEnderDragon)ed).getHandle().setGoalTarget((EntityLiving) edTarget.getHandle());
                         }
                     }
                 }
