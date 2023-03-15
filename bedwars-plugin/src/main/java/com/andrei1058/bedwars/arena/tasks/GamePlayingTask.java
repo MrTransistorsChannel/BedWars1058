@@ -47,10 +47,7 @@ import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitTask;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import static com.andrei1058.bedwars.BedWars.nms;
 import static com.andrei1058.bedwars.api.language.Language.getMsg;
@@ -240,7 +237,13 @@ public class GamePlayingTask implements Runnable, PlayingTask {
                         if(edTarget == null || edTarget.getType() != EntityType.PLAYER) continue;
                         Bukkit.getLogger().info(edTarget.getName());
                         if(t.wasMember(edTarget.getUniqueId())){
-                            ((CraftEnderDragon)ed).getHandle().target = ((CraftPlayer)Bukkit.getServer().getPlayer("MrTransistor_")).getHandle();
+                            Player randomEnemy;
+                            do{
+                                randomEnemy = arena.getPlayers().get(new Random().nextInt());
+                                Bukkit.getLogger().info("Trying to set " + randomEnemy.getName() + " as new " + t.getName() + " dragon target");
+                            } while(t.wasMember(randomEnemy.getUniqueId()));
+                            Bukkit.getLogger().info(t.getName() + " dragon is now targeting " + randomEnemy.getName());
+                            ((CraftEnderDragon)ed).getHandle().target = ((CraftPlayer)randomEnemy).getHandle();
                         }
                     }
                 }
