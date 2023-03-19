@@ -493,5 +493,7 @@ public interface IArena {
 
     void setTeamAssigner(ITeamAssigner teamAssigner);
 
-    List<Player> getLeavingPlayers();
+    List<Player> getLeavingPlayers();][]
+
+    void addEliminated(Player player);
 }
