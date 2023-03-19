@@ -637,7 +637,7 @@ public class Arena implements IArena {
     public boolean addSpectator(@NotNull Player p, boolean playerBefore, Location staffTeleport) {
         if (!allowEliminatedPlayersSpectating && eliminated.contains(p)) {
             p.sendMessage(getMsg(p, Messages.COMMAND_JOIN_SPECTATOR_DENIED_ELIMINATED_MSG));
-            if (isSpectator(p)) Misc.moveToLobbyOrKick(p, this, false);
+            Misc.moveToLobbyOrKick(p, this, false);
             return false;
         }
         if (allowSpectate || playerBefore || staffTeleport != null) {
