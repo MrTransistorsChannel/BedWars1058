@@ -85,6 +85,7 @@ public class Turkish extends Language {
         yml.addDefault(Messages.COMMAND_JOIN_PLAYER_JOIN_MSG, "{prefix}&7{player} &ekatıldı (&b{on}&e/&b{max}&e)!");
         yml.addDefault(Messages.COMMAND_JOIN_SPECTATOR_MSG, "{prefix}§6Şu anda §9{arena}§6 haritasını seyrediyorsun.\n{prefix}§eHaritadan ayrılmak için §c/leave§e komudunu kullanabilirsin.");
         yml.addDefault(Messages.COMMAND_JOIN_SPECTATOR_DENIED_MSG, "&cBu harita seyircilere kapalı!");
+        yml.addDefault(Messages.COMMAND_JOIN_SPECTATOR_DENIED_ELIMINATED_MSG, "&c **ADD MESSAGE: You cannot spectate the game since you have been eliminated**");
         yml.addDefault(Messages.COMMAND_TP_PLAYER_NOT_FOUND, "{prefix}&cOyuncu bulunamadı!");
         yml.addDefault(Messages.COMMAND_TP_NOT_IN_ARENA, "{prefix}&cBu oyuncu bir haritada değil!");
         yml.addDefault(Messages.COMMAND_TP_NOT_STARTED, "{prefix}&cOyuncunun bulunduğu haritada oyun henüz başlamadı!");

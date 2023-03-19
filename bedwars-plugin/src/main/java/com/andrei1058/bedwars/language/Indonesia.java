@@ -83,6 +83,7 @@ public class Indonesia extends Language {
         yml.addDefault(Messages.COMMAND_JOIN_PLAYER_JOIN_MSG, "{prefix}&7{player} &etelah masuk (&b{on}&e/&b{max}&e)!");
         yml.addDefault(Messages.COMMAND_JOIN_SPECTATOR_MSG, "{prefix}§6Kamu sekarang menonton §9{arena}§6.\n{prefix}§eKamu bisa keluar arena kapan pun dengan cara §c/leave§e.");
         yml.addDefault(Messages.COMMAND_JOIN_SPECTATOR_DENIED_MSG, "&cPenonton tidak diperbolehkan di arena tersebut!");
+        yml.addDefault(Messages.COMMAND_JOIN_SPECTATOR_DENIED_ELIMINATED_MSG, "&c **ADD MESSAGE: You cannot spectate the game since you have been eliminated**");
         yml.addDefault(Messages.COMMAND_TP_PLAYER_NOT_FOUND, "{prefix}&cPemain tidak ditemukan!");
         yml.addDefault(Messages.COMMAND_TP_NOT_IN_ARENA, "{prefix}&cPlayer tersebut tidak ada di arena!");
         yml.addDefault(Messages.COMMAND_TP_NOT_STARTED, "{prefix}&cArena dimana player tersebut berada belum dimulai!");

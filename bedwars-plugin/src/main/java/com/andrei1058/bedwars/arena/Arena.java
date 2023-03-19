@@ -113,7 +113,8 @@ public class Arena implements IArena {
     private ArenaConfig cm;
     private int minPlayers = 2, maxPlayers = 10, maxInTeam = 1, islandRadius = 10;
     public int upgradeDiamondsCount = 0, upgradeEmeraldsCount = 0;
-    public boolean allowSpectate = true;
+    private boolean allowSpectate = true;
+    private boolean allowEliminatedPlayersSpectating = true;
     private World world;
     private String group = "Default", arenaName, worldName;
     private List<ITeam> teams = new ArrayList<>();
@@ -239,7 +240,8 @@ public class Arena implements IArena {
         maxInTeam = yml.getInt("maxInTeam");
         maxPlayers = yml.getConfigurationSection("Team").getKeys(false).size() * maxInTeam;
         minPlayers = yml.getInt("minPlayers");
-        allowSpectate = yml.getBoolean("allowSpectate");
+        allowSpectate = yml.getBoolean(ConfigPath.ARENA_SPEC_ENABLED);
+        allowEliminatedPlayersSpectating = yml.getBoolean(ConfigPath.ARENA_SPEC_ALLOW_ELIMINATED);
         islandRadius = yml.getInt(ConfigPath.ARENA_ISLAND_RADIUS);
         if (config.getYml().get("arenaGroups") != null) {
             if (config.getYml().getStringList("arenaGroups").contains(yml.getString("group"))) {
@@ -628,6 +630,10 @@ public class Arena implements IArena {
      * @param playerBefore True if the player has played in this arena before and he died so now should be a spectator.
      */
     public boolean addSpectator(@NotNull Player p, boolean playerBefore, Location staffTeleport) {
+        if(playerBefore && !allowEliminatedPlayersSpectating){
+            p.sendMessage(getMsg(p, Messages.COMMAND_JOIN_SPECTATOR_DENIED_MSG));
+            return false;
+        }
         if (allowSpectate || playerBefore || staffTeleport != null) {
             debug("Spectator added: " + p.getName() + " arena: " + getArenaName());
 

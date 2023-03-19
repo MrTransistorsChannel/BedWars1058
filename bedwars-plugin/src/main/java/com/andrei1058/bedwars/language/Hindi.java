@@ -83,6 +83,7 @@ public class Hindi extends Language {
         yml.addDefault(Messages.COMMAND_JOIN_PLAYER_JOIN_MSG, "{prefix}&7{player} &ejoin kiye (&b{on}&e/&b{max}&e)!");
         yml.addDefault(Messages.COMMAND_JOIN_SPECTATOR_MSG, "{prefix}§6Ap abhi §9{arena} §6spectate kar rahe hai.\n{prefix}§§eAp kabhi bhi §c/leave §euse karke leave kar sakte hai.");
         yml.addDefault(Messages.COMMAND_JOIN_SPECTATOR_DENIED_MSG, "&cIs arena me spectators allowed nahi hain!");
+        yml.addDefault(Messages.COMMAND_JOIN_SPECTATOR_DENIED_ELIMINATED_MSG, "&c **ADD MESSAGE: You cannot spectate the game since you have been eliminated**");
         yml.addDefault(Messages.COMMAND_TP_PLAYER_NOT_FOUND, "{prefix}&cPlayer nahi miley!");
         yml.addDefault(Messages.COMMAND_TP_NOT_IN_ARENA, "{prefix}&cYe player ek arena me nahi hein!");
         yml.addDefault(Messages.COMMAND_TP_NOT_STARTED, "{prefix}&cYe player jis arena me hai wo arena abhi bhi start nahi hua!");

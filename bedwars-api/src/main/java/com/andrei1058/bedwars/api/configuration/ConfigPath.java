@@ -179,6 +179,8 @@ public class ConfigPath {
     public static final String ARENA_USE_BED_HOLO = "use-bed-hologram";
     public static final String ARENA_ALLOW_MAP_BREAK = "allow-map-break";
     public static final String ARENA_GAME_RULES = "game-rules";
+    public static final String ARENA_SPEC_ENABLED = "allow-spectating";
+    public static final String ARENA_SPEC_ALLOW_ELIMINATED = "allow-eliminated-spectating";
     public static final String ARENA_SPEC_LOC = "spectator-loc";
     public static final String ARENA_TEAM_KILL_DROPS_LOC = "kill-drops-loc";
     public static final String ARENA_Y_LEVEL_KILL = "y-kill-height";

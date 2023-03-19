@@ -85,6 +85,7 @@ public class Persian extends Language {
         yml.addDefault(Messages.COMMAND_JOIN_PLAYER_JOIN_MSG, "{prefix}&7{player} &evared shod (&b{on}&e/&b{max}&e)!");
         yml.addDefault(Messages.COMMAND_JOIN_SPECTATOR_MSG, "{prefix}§6Shoma darhale spectate kardan §9{arena} §6hastid.\n{prefix}§eBaraye kharej shodan az arena az §c/leave §eestefade konid.");
         yml.addDefault(Messages.COMMAND_JOIN_SPECTATOR_DENIED_MSG, "&cEmkan vared shodan spectator be in arena vojood nadarad!");
+        yml.addDefault(Messages.COMMAND_JOIN_SPECTATOR_DENIED_ELIMINATED_MSG, "&c **ADD MESSAGE: You cannot spectate the game since you have been eliminated**");
         yml.addDefault(Messages.COMMAND_TP_PLAYER_NOT_FOUND, "{prefix}&cPlayer peida nashod!");
         yml.addDefault(Messages.COMMAND_TP_NOT_IN_ARENA, "{prefix}&cIn player dar yek arena bedwars nist!");
         yml.addDefault(Messages.COMMAND_TP_NOT_STARTED, "{prefix}&cArena i ke player dakhelesh hast hanooz start nashode!");
