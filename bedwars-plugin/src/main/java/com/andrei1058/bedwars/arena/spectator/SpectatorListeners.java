@@ -29,6 +29,7 @@ import com.andrei1058.bedwars.api.events.spectator.SpectatorFirstPersonLeaveEven
 import com.andrei1058.bedwars.api.events.spectator.SpectatorTeleportToPlayerEvent;
 import com.andrei1058.bedwars.api.language.Messages;
 import com.andrei1058.bedwars.arena.Arena;
+import com.andrei1058.bedwars.arena.tasks.SpectatorInventoryViewTask;
 import com.andrei1058.bedwars.configuration.Sounds;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
@@ -177,6 +178,9 @@ public class SpectatorListeners implements Listener {
             p.getInventory().setHeldItemSlot(5);
             p.setGameMode(GameMode.SPECTATOR);
             p.setSpectatorTarget(target);
+            // Create task which will refresh inventory every second
+            // This task will kill itself automatically when player leaves FPV
+            new SpectatorInventoryViewTask(p, target);
             nms.sendTitle(p, event.getTitle().apply(p).replace("{playername}", p.getName()).replace("{player}", target.getDisplayName()), event.getSubTitle().apply(p).replace("{player}", target.getDisplayName()), event.getFadeIn(), event.getStay(), event.getFadeOut());
         }
     }

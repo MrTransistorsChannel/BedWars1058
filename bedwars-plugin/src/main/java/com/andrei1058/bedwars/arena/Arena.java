@@ -56,6 +56,7 @@ import com.andrei1058.bedwars.arena.tasks.ReJoinTask;
 import com.andrei1058.bedwars.arena.team.BedWarsTeam;
 import com.andrei1058.bedwars.arena.team.TeamAssigner;
 import com.andrei1058.bedwars.configuration.ArenaConfig;
+import com.andrei1058.bedwars.configuration.Permissions;
 import com.andrei1058.bedwars.configuration.Sounds;
 import com.andrei1058.bedwars.levels.internal.InternalLevel;
 import com.andrei1058.bedwars.levels.internal.PerMinuteTask;
@@ -635,12 +636,14 @@ public class Arena implements IArena {
      * @param playerBefore True if the player has played in this arena before and he died so now should be a spectator.
      */
     public boolean addSpectator(@NotNull Player p, boolean playerBefore, Location staffTeleport) {
-        if (!allowEliminatedPlayersSpectating && eliminated.contains(p)) {
+        if (!(allowEliminatedPlayersSpectating || p.hasPermission(Permissions.PERMISSION_SPECTATOR_BYPASS)) && eliminated.contains(p)) {
             p.sendMessage(getMsg(p, Messages.COMMAND_JOIN_SPECTATOR_DENIED_ELIMINATED_MSG));
-            Misc.moveToLobbyOrKick(p, this, false);
-            return false;
+            Bukkit.getScheduler().runTaskLater(plugin, () ->{
+                sendToMainLobby(p);
+            }, 20L);
+            return true;
         }
-        if (allowSpectate || playerBefore || staffTeleport != null) {
+        if (p.hasPermission(Permissions.PERMISSION_SPECTATOR_BYPASS) || allowSpectate || playerBefore || staffTeleport != null) {
             debug("Spectator added: " + p.getName() + " arena: " + getArenaName());
 
             if (!playerBefore) {
