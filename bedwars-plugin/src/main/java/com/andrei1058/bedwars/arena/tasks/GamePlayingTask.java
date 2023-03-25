@@ -253,6 +253,11 @@ public class GamePlayingTask implements Runnable, PlayingTask {
                     }
                 }
 
+                if(getGameEndCountdown() == 300){
+                    arena.getWorld().getWorldBorder().setSize(arena.getConfig().getInt("worldBorder"));
+                    arena.getWorld().getWorldBorder().setSize(4, 270);
+                }
+
                 if (getGameEndCountdown() == 0) {
                     // Remove ender dragons and clear players` inventories on game end
                     for(ITeam t : arena.getTeams()){

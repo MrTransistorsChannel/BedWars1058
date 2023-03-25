@@ -60,6 +60,7 @@ public class Messages {
     public static String COMMAND_JOIN_PLAYER_JOIN_MSG = "cmd-join-success";
     public static String COMMAND_JOIN_SPECTATOR_MSG = "cmd-join-spectate";
     public static String COMMAND_JOIN_SPECTATOR_DENIED_MSG = "cmd-join-spectate-denied";
+    public static String COMMAND_JOIN_SPECTATOR_DENIED_ELIMINATED_MSG = "cmd-join-spectate-denied-dead";
     public static String COMMAND_TP_PLAYER_NOT_FOUND = "cmd-tp-player-not-found";
     public static String COMMAND_TP_NOT_IN_ARENA = "cmd-tp-not-in-arena";
     public static String COMMAND_TP_NOT_STARTED = "cmd-tp-not-started";

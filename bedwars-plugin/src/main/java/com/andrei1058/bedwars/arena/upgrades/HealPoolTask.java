@@ -4,6 +4,7 @@ import com.andrei1058.bedwars.BedWars;
 import com.andrei1058.bedwars.api.arena.IArena;
 import com.andrei1058.bedwars.api.arena.team.ITeam;
 import com.andrei1058.bedwars.api.configuration.ConfigPath;
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -42,7 +43,7 @@ public class HealPoolTask extends BukkitRunnable {
         this.maxZ = (teamspawn.getBlockZ() + radius);
         this.minZ = (teamspawn.getBlockZ() - radius);
         this.arena = bwt.getArena();
-        this.runTaskTimerAsynchronously(plugin, 0, 80L);
+        this.runTaskTimerAsynchronously(plugin, 0, 20L);
         healPoolTasks.add(this);
     }
 
@@ -59,7 +60,7 @@ public class HealPoolTask extends BukkitRunnable {
                 for (int z = minZ; z <= maxZ; z++) {
                     l = new Location(arena.getWorld(), x + .5, y + .5, z +.5);
                     if (l.getBlock().getType() != Material.AIR) continue;
-                    int chance = r.nextInt(9);
+                    int chance = r.nextInt(500);
                     if (chance == 0) {
                         if (config.getBoolean(ConfigPath.GENERAL_CONFIGURATION_HEAL_POOL_SEEN_TEAM_ONLY)) {
                             for (Player p : bwt.getMembers()) {
@@ -71,6 +72,10 @@ public class HealPoolTask extends BukkitRunnable {
                             for (Player p : arena.getPlayers()) {
                                 BedWars.nms.playVillagerEffect(p, l);
                             }
+                        }
+
+                        for (Player p : arena.getSpectators()) {
+                            BedWars.nms.playVillagerEffect(p, l);
                         }
                     }
                 }

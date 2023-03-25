@@ -85,6 +85,7 @@ public class Bangla extends Language {
         yml.addDefault(Messages.COMMAND_JOIN_PLAYER_JOIN_MSG, "{prefix}&7{player} &ejog diyechen! (&b{on}&e/&b{max}&e)");
         yml.addDefault(Messages.COMMAND_JOIN_SPECTATOR_MSG, "{prefix}§6Apni akhon spectate korchen §9{arena}§6.\n{prefix}§eApni §c/leave§e kore je kono muhurte leave korte parben.");
         yml.addDefault(Messages.COMMAND_JOIN_SPECTATOR_DENIED_MSG, "&cEi arena ti te spectators allowed na!");
+        yml.addDefault(Messages.COMMAND_JOIN_SPECTATOR_DENIED_ELIMINATED_MSG, "&c **ADD MESSAGE: You cannot spectate the game since you have been eliminated**");
         yml.addDefault(Messages.COMMAND_TP_PLAYER_NOT_FOUND, "{prefix}&cPlayer paowa jai ni!");
         yml.addDefault(Messages.COMMAND_TP_NOT_IN_ARENA, "{prefix}&cEi player ti ekti bedwars arena te nei!");
         yml.addDefault(Messages.COMMAND_TP_NOT_STARTED, "{prefix}&cEi player er arena akhono start hoini!");

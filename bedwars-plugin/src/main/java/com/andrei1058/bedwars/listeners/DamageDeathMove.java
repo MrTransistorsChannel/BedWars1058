@@ -536,6 +536,7 @@ public class DamageDeathMove implements Listener {
             }
             if (t.isBedDestroyed()) {
                 e.setRespawnLocation(a.getSpectatorLocation());
+                a.addEliminated(e.getPlayer());
                 a.addSpectator(e.getPlayer(), true, null);
                 t.getMembers().remove(e.getPlayer());
                 e.getPlayer().sendMessage(getMsg(e.getPlayer(), Messages.PLAYER_DIE_ELIMINATED_CHAT));

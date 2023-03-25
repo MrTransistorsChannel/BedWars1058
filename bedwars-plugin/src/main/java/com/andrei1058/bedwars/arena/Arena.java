@@ -56,6 +56,7 @@ import com.andrei1058.bedwars.arena.tasks.ReJoinTask;
 import com.andrei1058.bedwars.arena.team.BedWarsTeam;
 import com.andrei1058.bedwars.arena.team.TeamAssigner;
 import com.andrei1058.bedwars.configuration.ArenaConfig;
+import com.andrei1058.bedwars.configuration.Permissions;
 import com.andrei1058.bedwars.configuration.Sounds;
 import com.andrei1058.bedwars.levels.internal.InternalLevel;
 import com.andrei1058.bedwars.levels.internal.PerMinuteTask;
@@ -106,6 +107,7 @@ public class Arena implements IArena {
 
 
     private List<Player> players = new ArrayList<>();
+    private List<Player> eliminated = new ArrayList<>();
     private List<Player> spectators = new ArrayList<>();
     private List<Block> signs = new ArrayList<>();
     private GameState status = GameState.restarting;
@@ -113,7 +115,8 @@ public class Arena implements IArena {
     private ArenaConfig cm;
     private int minPlayers = 2, maxPlayers = 10, maxInTeam = 1, islandRadius = 10;
     public int upgradeDiamondsCount = 0, upgradeEmeraldsCount = 0;
-    public boolean allowSpectate = true;
+    private boolean allowSpectate = true;
+    private boolean allowEliminatedPlayersSpectating = true;
     private World world;
     private String group = "Default", arenaName, worldName;
     private List<ITeam> teams = new ArrayList<>();
@@ -178,11 +181,11 @@ public class Arena implements IArena {
 
     private boolean isPaused = false;
 
-    public boolean isPaused(){
+    public boolean isPaused() {
         return isPaused;
     }
 
-    public void setPaused(boolean state){
+    public void setPaused(boolean state) {
         isPaused = state;
     }
 
@@ -195,7 +198,7 @@ public class Arena implements IArena {
      */
     public Arena(String name, Player p) {
         cm = new ArenaConfig(BedWars.plugin, name, plugin.getDataFolder().getPath() + "/Arenas");
-        if(!cm.getBoolean(ConfigPath.ARENA_ENABLED)) return;
+        if (!cm.getBoolean(ConfigPath.ARENA_ENABLED)) return;
 
         if (!autoscale) {
             for (IArena mm : enableQueue) {
@@ -239,7 +242,8 @@ public class Arena implements IArena {
         maxInTeam = yml.getInt("maxInTeam");
         maxPlayers = yml.getConfigurationSection("Team").getKeys(false).size() * maxInTeam;
         minPlayers = yml.getInt("minPlayers");
-        allowSpectate = yml.getBoolean("allowSpectate");
+        allowSpectate = yml.getBoolean(ConfigPath.ARENA_SPEC_ENABLED);
+        allowEliminatedPlayersSpectating = yml.getBoolean(ConfigPath.ARENA_SPEC_ALLOW_ELIMINATED);
         islandRadius = yml.getInt(ConfigPath.ARENA_ISLAND_RADIUS);
         if (config.getYml().get("arenaGroups") != null) {
             if (config.getYml().getStringList("arenaGroups").contains(yml.getString("group"))) {
@@ -511,12 +515,12 @@ public class Arena implements IArena {
             for (Player on : players) {
                 on.sendMessage(
                         getMsg(on, Messages.COMMAND_JOIN_PLAYER_JOIN_MSG)
-                            .replace("{vPrefix}", getChatSupport().getPrefix(p))
-                            .replace("{vSuffix}", getChatSupport().getSuffix(p))
-                            .replace("{playername}", p.getName())
-                            .replace("{player}", p.getDisplayName())
-                            .replace("{on}", String.valueOf(getPlayers().size()))
-                            .replace("{max}", String.valueOf(getMaxPlayers()))
+                                .replace("{vPrefix}", getChatSupport().getPrefix(p))
+                                .replace("{vSuffix}", getChatSupport().getSuffix(p))
+                                .replace("{playername}", p.getName())
+                                .replace("{player}", p.getDisplayName())
+                                .replace("{on}", String.valueOf(getPlayers().size()))
+                                .replace("{max}", String.valueOf(getMaxPlayers()))
                 );
             }
             setArenaByPlayer(p, this);
@@ -560,7 +564,7 @@ public class Arena implements IArena {
             }
             PaperSupport.teleportC(p, getWaitingLocation(), PlayerTeleportEvent.TeleportCause.PLUGIN);
 
-            if (!isStatusChange){
+            if (!isStatusChange) {
                 SidebarService.getInstance().giveSidebar(p, this, false);
             }
             sendPreGameCommandItems(p);
@@ -621,6 +625,10 @@ public class Arena implements IArena {
         return true;
     }
 
+    public void addEliminated(Player p) {
+        eliminated.add(p);
+    }
+
     /**
      * Add a player as Spectator
      *
@@ -628,7 +636,14 @@ public class Arena implements IArena {
      * @param playerBefore True if the player has played in this arena before and he died so now should be a spectator.
      */
     public boolean addSpectator(@NotNull Player p, boolean playerBefore, Location staffTeleport) {
-        if (allowSpectate || playerBefore || staffTeleport != null) {
+        if (!(allowEliminatedPlayersSpectating || p.hasPermission(Permissions.PERMISSION_SPECTATOR_BYPASS)) && eliminated.contains(p)) {
+            p.sendMessage(getMsg(p, Messages.COMMAND_JOIN_SPECTATOR_DENIED_ELIMINATED_MSG));
+            Bukkit.getScheduler().runTaskLater(plugin, () ->{
+                sendToMainLobby(p);
+            }, 20L);
+            return true;
+        }
+        if (p.hasPermission(Permissions.PERMISSION_SPECTATOR_BYPASS) || allowSpectate || playerBefore || staffTeleport != null) {
             debug("Spectator added: " + p.getName() + " arena: " + getArenaName());
 
             if (!playerBefore) {
@@ -674,7 +689,7 @@ public class Arena implements IArena {
             p.setGameMode(GameMode.ADVENTURE);
 
             Bukkit.getScheduler().runTaskLater(plugin, () -> {
-                if(leaving.contains(p)) return;
+                if (leaving.contains(p)) return;
                 p.setAllowFlight(true);
                 p.setFlying(true);
             }, 5L);
@@ -683,7 +698,7 @@ public class Arena implements IArena {
                 p.getPassenger().remove();
 
             Bukkit.getScheduler().runTask(plugin, () -> {
-                if(leaving.contains(p)) return;
+                if (leaving.contains(p)) return;
                 for (Player on : Bukkit.getOnlinePlayers()) {
                     if (on == p) continue;
                     if (getSpectators().contains(on)) {
@@ -758,7 +773,7 @@ public class Arena implements IArena {
      * @param disconnect True if the player was disconnected
      */
     public void removePlayer(@NotNull Player p, boolean disconnect) {
-        if(leaving.contains(p)) {
+        if (leaving.contains(p)) {
             return;
         } else {
             leaving.add(p);
@@ -845,7 +860,7 @@ public class Arena implements IArena {
                 }
             } else if (alive_teams == 0 && !BedWars.isShuttingDown()) {
                 Bukkit.getScheduler().runTaskLater(BedWars.plugin, () -> changeStatus(GameState.restarting), 10L);
-            } else if(!BedWars.isShuttingDown()) {
+            } else if (!BedWars.isShuttingDown()) {
                 //ReJoin feature
                 new ReJoin(p, this, team, cacheList);
             }
@@ -927,7 +942,7 @@ public class Arena implements IArena {
             p.removePotionEffect(pf.getType());
         }
 
-        if(!BedWars.isShuttingDown()) {
+        if (!BedWars.isShuttingDown()) {
             Bukkit.getScheduler().scheduleSyncDelayedTask(plugin, () -> {
                 for (Player on : Bukkit.getOnlinePlayers()) {
                     if (on.equals(p)) continue;
@@ -1024,7 +1039,7 @@ public class Arena implements IArena {
     public void removeSpectator(@NotNull Player p, boolean disconnect) {
         debug("Spectator removed: " + p.getName() + " arena: " + getArenaName());
 
-        if(leaving.contains(p)) {
+        if (leaving.contains(p)) {
             return;
         } else {
             leaving.add(p);
@@ -1068,7 +1083,7 @@ public class Arena implements IArena {
         }
         playerLocation.remove(p);
 
-        if(!BedWars.isShuttingDown()) {
+        if (!BedWars.isShuttingDown()) {
             Bukkit.getScheduler().runTask(plugin, () -> {
                 for (Player on : Bukkit.getOnlinePlayers()) {
                     if (on.equals(p)) continue;
@@ -1210,7 +1225,7 @@ public class Arena implements IArena {
         if (getRestartingTask() != null) getRestartingTask().cancel();
         if (getStartingTask() != null) getStartingTask().cancel();
         if (getPlayingTask() != null) getPlayingTask().cancel();
-        if (null != moneyperMinuteTask){
+        if (null != moneyperMinuteTask) {
             moneyperMinuteTask.cancel();
         }
         if (null != perMinuteTask) {
@@ -1504,7 +1519,7 @@ public class Arena implements IArena {
                 restartingTask.cancel();
         }
         restartingTask = null;
-        if (null != moneyperMinuteTask){
+        if (null != moneyperMinuteTask) {
             moneyperMinuteTask.cancel();
         }
         if (null != perMinuteTask) {
@@ -1855,10 +1870,10 @@ public class Arena implements IArena {
             }
             if (max - eliminated == 1) {
                 // Remove dragons and clear players` inventories on victory
-                for(ITeam t : getTeams()){
-                    for(EnderDragon ed : t.getDragonEntities())
+                for (ITeam t : getTeams()) {
+                    for (EnderDragon ed : t.getDragonEntities())
                         ed.remove();
-                    for(Player p : t.getMembers())
+                    for (Player p : t.getMembers())
                         p.getInventory().clear();
                 }
 
@@ -2564,7 +2579,8 @@ public class Arena implements IArena {
             if (ar.getArenaName().equalsIgnoreCase(arenaName)) return false;
         }
 
-        if (Arena.getGamesBeforeRestart() != -1 && Arena.getArenas().size() >= Arena.getGamesBeforeRestart()) return false;
+        if (Arena.getGamesBeforeRestart() != -1 && Arena.getArenas().size() >= Arena.getGamesBeforeRestart())
+            return false;
 
         int activeClones = 0;
         for (IArena ar : Arena.getArenas()) {
@@ -2573,7 +2589,7 @@ public class Arena implements IArena {
                 if (ar.getStatus() == GameState.waiting || ar.getStatus() == GameState.starting) return false;
             }
             // count active clones
-            if (ar.getArenaName().equals(arenaName)){
+            if (ar.getArenaName().equals(arenaName)) {
                 activeClones++;
             }
         }

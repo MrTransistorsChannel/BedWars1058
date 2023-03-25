@@ -179,6 +179,8 @@ public class ConfigPath {
     public static final String ARENA_USE_BED_HOLO = "use-bed-hologram";
     public static final String ARENA_ALLOW_MAP_BREAK = "allow-map-break";
     public static final String ARENA_GAME_RULES = "game-rules";
+    public static final String ARENA_SPEC_ENABLED = "allow-spectating";
+    public static final String ARENA_SPEC_ALLOW_ELIMINATED = "allow-eliminated-spectating";
     public static final String ARENA_SPEC_LOC = "spectator-loc";
     public static final String ARENA_TEAM_KILL_DROPS_LOC = "kill-drops-loc";
     public static final String ARENA_Y_LEVEL_KILL = "y-kill-height";
@@ -237,7 +239,7 @@ public class ConfigPath {
 
     private static final String GENERAL_CONFIGURATION_HEAL_POOL = GENERAL_CONFIGURATION_PERFORMANCE_PATH+".heal-pool";
     public static final String GENERAL_CONFIGURATION_HEAL_POOL_ENABLE = GENERAL_CONFIGURATION_HEAL_POOL+".enable";
-    public static final String GENERAL_CONFIGURATION_HEAL_POOL_SEEN_TEAM_ONLY = GENERAL_CONFIGURATION_HEAL_POOL_ENABLE+".seen-by-team-only";
+    public static final String GENERAL_CONFIGURATION_HEAL_POOL_SEEN_TEAM_ONLY = GENERAL_CONFIGURATION_HEAL_POOL+".seen-by-team-only";
     public static final String SHOP_SETTINGS_PATH = "shop-settings";
     public static final String SHOP_SPECIALS_PATH = "shop-specials";
     public static final String SHOP_QUICK_DEFAULTS_PATH = "quick-buy-defaults";

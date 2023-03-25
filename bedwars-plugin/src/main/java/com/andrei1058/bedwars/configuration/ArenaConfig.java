@@ -40,7 +40,8 @@ public class ArenaConfig extends ConfigManager {
         yml.addDefault(ConfigPath.ARENA_DISPLAY_NAME, "");
         yml.addDefault("minPlayers", 2);
         yml.addDefault("maxInTeam", 1);
-        yml.addDefault("allowSpectate", true);
+        yml.addDefault(ConfigPath.ARENA_SPEC_ENABLED, true);
+        yml.addDefault(ConfigPath.ARENA_SPEC_ALLOW_ELIMINATED, true);
         yml.addDefault(ConfigPath.ARENA_SPAWN_PROTECTION, 5);
         yml.addDefault(ConfigPath.ARENA_SHOP_PROTECTION, 1);
         yml.addDefault(ConfigPath.ARENA_UPGRADES_PROTECTION, 1);
@@ -85,7 +86,7 @@ public class ArenaConfig extends ConfigManager {
         if (yml.get("islandRadius") != null) {
             set(ConfigPath.ARENA_ISLAND_RADIUS, yml.getInt("islandRadius"));
         }
-        if (yml.get("voidKill") != null){
+        if (yml.get("voidKill") != null) {
             set("voidKill", null);
         }
         set(ConfigPath.GENERAL_CONFIGURATION_ENABLE_GEN_SPLIT, null);

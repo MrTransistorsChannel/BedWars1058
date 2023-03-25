@@ -84,7 +84,7 @@ public class BaseListener implements Listener {
         boolean notOnBase = true;
         for (ITeam bwt : a.getTeams()) {
             /* BaseEnterEvent */
-            if (p.getLocation().distance(bwt.getBed()) <= a.getIslandRadius()) {
+            if (p.getLocation().distance(bwt.getSpawn()) <= a.getIslandRadius()) {
                 notOnBase = false;
                 if (isOnABase.containsKey(p)) {
                     if (isOnABase.get(p) != bwt) {
