@@ -67,7 +67,6 @@ import org.bukkit.craftbukkit.v1_18_R2.entity.CraftLivingEntity;
 import org.bukkit.craftbukkit.v1_18_R2.entity.CraftPlayer;
 import org.bukkit.craftbukkit.v1_18_R2.entity.CraftTNTPrimed;
 import org.bukkit.craftbukkit.v1_18_R2.inventory.CraftItemStack;
-import org.bukkit.entity.Entity;
 import org.bukkit.entity.*;
 import org.bukkit.event.inventory.InventoryEvent;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -561,7 +560,7 @@ public class v1_18_R2 extends VersionSupport {
         if (meta instanceof SkullMeta) {
             ((SkullMeta) meta).setOwnerProfile(player.getPlayerProfile());
         }
-
+        head.setItemMeta(meta);
         return head;
     }
 
